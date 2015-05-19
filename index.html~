@@ -33,8 +33,8 @@
                                         <div class="logo"><a href="#"><img src="colors/blue/images/logo.png" alt="" title="" border="0" /></a></div>
                                         <div class="menu">
                                         <ul>
-                                        <li><a href="http://www.baidu.com" onclick="swiperParent.swipeTo(1);"><img src="images/icons/about.png" alt="" title="" /><span>百度一下</span></a></li>
-                                        <li><a href="demo_one/demo_one.html" onclick="swiperParent.swipeTo(2);"><img src="images/icons/tools.png" alt="" title="" /><span>测试网站</span></a></li>
+                                        <li><a href="http://www.baidu.com" onclick="swiperParent.swipeTo(1);"><img src="images/icons/about.png" alt="" title="" /><span>关于我们</span></a></li>
+                                        <li><a href="demo_one/demo_one.html" onclick="swiperParent.swipeTo(2);"><img src="images/icons/tools.png" alt="" title="" /><span>产品服务</span></a></li>
                                         <li><a href="#" onclick="swiperParent.swipeTo(3);"><img src="images/icons/blog.png" alt="" title="" /><span>新闻资讯</span></a></li>
                                         <li><a href="#" onclick="swiperParent.swipeTo(5);"><img src="images/icons/docs.png" alt="" title="" /><span>产品列表</span></a></li>
                                         <li><a href="#" onclick="swiperParent.swipeTo(6);"><img src="images/icons/photos.png" alt="" title="" /><span>产品相册</span></a></li>
