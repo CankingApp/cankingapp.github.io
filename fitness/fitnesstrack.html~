@@ -17,7 +17,7 @@
 <body>
     <div class="header">
         <div class="container">
-            <a class="navbar-brand" href="GitBlog官网.html">健美计步器（FitnessTrack）</a>
+            <a class="navbar-brand" href="#">健美计步器（FitnessTrack）</a>
 
             <div class="menu">
                 <a class="toggleMenu" href="http://www.gitblog.cn/#" style="display: none;"><img alt="GitBlog" src="nav_icon.png"></a>
@@ -200,10 +200,10 @@
         <div class="footer">
             <div class="footer_bottom">
                 <div class="follow-us">
-                    <a class="fa fa-github social-icon" href="https://github.com/CankingApp"></a>
-                    <a class="fa fa-weibo social-icon" href="http://weibo.com/canking666"></a>
-                    <a class="fa fa-weixin social-icon" href="http://mp.weixin.qq.com/s?__biz=MzA5NDU0Mzk3OQ==&mid=210637816&idx=1&sn=5c69bbefd517d8a0ca6c093dab8c38eb#rd"></a>
-                    <a class="fa fa-qq social-icon" href="http://weibo.com/canking666"></a>
+                    <a class="fa social-icon" href="https://github.com/CankingApp">Github</a>
+                    <a class="fa social-icon" href="http://weibo.com/canking666">S</a>
+                    <a class="fa social-icon" href="http://mp.weixin.qq.com/s?__biz=MzA5NDU0Mzk3OQ==&mid=210637816&idx=1&sn=5c69bbefd517d8a0ca6c093dab8c38eb#rd">S</a>
+                    <a class="fa social-icon" href="http://weibo.com/canking666">Q</a>
                 </div>
 
 
