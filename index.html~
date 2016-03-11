@@ -115,7 +115,6 @@
 		<a href="http://blog.csdn.net/cankingapp/article/details/7389489">阅读全文</a>
 	</div>
 	</footer><!-- .entry-footer --></article><!-- #article end-## -->	
-
 <!-- #article start-## --><article class="post hentry"><header class="entry-header">
 	<h3 class="post-title"><a href="https://github.com/CankingApp/ListAnimator" rel="bookmark">Android ListView动画特效实现原理及源码</a></h3>
 	<div class="entry-meta">
@@ -132,25 +131,6 @@
 		
 		<div class="read-more">
 		<a href="http://blog.csdn.net/cankingapp/article/details/36889157">阅读全文</a>
-	</div>
-	</footer><!-- .entry-footer --></article><!-- #article end-## --> 
-
-<!-- #article start-## --><article class="post hentry"><header class="entry-header">
-	<h3 class="post-title"><a href="https://github.com/CankingApp/ListAnimator" rel="bookmark">NotificationListenerService 安卓通知栏管理详解及分析</a></h3>
-	<div class="entry-meta">
-		<time class="post-date">2015-06-01</time>
-				<span class="seperator">/</span>
-	    <span>canking</span>
-	    	</div><!-- .entry-meta -->
-</header><!-- .entry-header -->	<div class="entry-content">
-	<p>
-		</p><p>在api 18前可以通过辅助功能'AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED'或是反射活取通知栏相关信息。 现在我们可以根据NotificationListenerService类非常容易的活取通知回调相关信息。
-</p>
-		<p></p>
-</div><!-- .entry-content -->	<footer class="entry-footer">
-		
-		<div class="read-more">
-		<a href="https://github.com/CankingApp/notifymrg">阅读全文</a>
 	</div>
 	</footer><!-- .entry-footer --></article><!-- #article end-## -->        				        		
 			        				</div>
