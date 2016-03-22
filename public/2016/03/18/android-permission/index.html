@@ -1,0 +1,244 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="做酷的东西, 成为伟大的工程师，写匪夷所思的代码，然后和每个人成为朋友．"><title>Android 6.0系统中权限问题调用 - Permission in Android M | 常兴 E 站</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Android 6.0系统中权限问题调用 - Permission in Android M</h1><a id="logo" href="/.">常兴 E 站</a><p class="description">Action Speak Louder Than Words.</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/sitemap.xml"><i class="fa fa-rss"> sitemap</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Android 6.0系统中权限问题调用 - Permission in Android M</h1><div class="post-meta">Mar 18, 2016<span> | </span><span class="category"><a href="/categories/android/">android</a></span></div><div class="post-content"><p>安卓平台权限一直有被流氓应用随便利用诟病, android M的发布彻底解决了这一问题,取而代之的是，app不得不在运行时一个一个询问用户授予权限。 </p>
+<p>Android 6.0(api23)系统中,做了一些限制, 开发者在使用到每条权限时必须自己调用相关代码请求.<br><a id="more"></a></p>
+<p>如果没有获得某项权限,直接使用相关功能,则会导致自己程序crash.<br><img src="./android-permission/error.png" alt="见log"></p>
+<p>可见6.0以后的系统开发者必须对权限适配,否则软件随时都可能奔溃,那么问题来了~</p>
+<p><strong>已经发出去的版本或是targetSdkVersion小与23的apk怎么办?</strong><br>废话,当然会崩了!!!</p>
+<p>只要在满足在Android M上直接使用为授权的功能，程序必须Crash. targetSdkVersion&lt;23的应用在安装时系统会默认全部授权应用在manifest中申请的权限，<br>不要应用这样你的应用就完事大全了．用户可以在以下页面或是其他应用关闭相关权限，然后…你的应用就没有然后了～<br><img src="./android-permission/per_show.png" alt="关闭权限页"></p>
+<h2 id="Android-M-权限分类"><a href="#Android-M-权限分类" class="headerlink" title="Android M 权限分类"></a>Android M 权限分类</h2><p><em>安卓系统把权限分为了三类:</em></p>
+<ul>
+<li><p>Normal Permissions</p>
+</li>
+<li><p>Dangerous Permissions</p>
+</li>
+<li><p>Special Permissions</p>
+</li>
+</ul>
+<h3 id="Normal-Permissions-一般权限"><a href="#Normal-Permissions-一般权限" class="headerlink" title="Normal Permissions-一般权限"></a>Normal Permissions-一般权限</h3><p>一般权限都是一些系统认为比较权限的权限，流氓应用就是拥有这些权限也干不出多大坏事，Normal 权限会在应用安装是直接授权，<br><a href="./android-permission/error.png">官网解释</a>：权限如下：</p>
+<pre><code>ACCESS_LOCATION_EXTRA_COMMANDS
+ACCESS_NETWORK_STATE
+ACCESS_NOTIFICATION_POLICY
+ACCESS_WIFI_STATE
+BLUETOOTH
+BLUETOOTH_ADMIN
+BROADCAST_STICKY
+CHANGE_NETWORK_STATE
+CHANGE_WIFI_MULTICAST_STATE
+CHANGE_WIFI_STATE
+DISABLE_KEYGUARD
+EXPAND_STATUS_BAR
+FLASHLIGHT
+GET_PACKAGE_SIZE
+INTERNET
+KILL_BACKGROUND_PROCESSES
+MODIFY_AUDIO_SETTINGS
+NFC
+READ_SYNC_SETTINGS
+READ_SYNC_STATS
+RECEIVE_BOOT_COMPLETED
+REORDER_TASKS
+REQUEST_INSTALL_PACKAGES
+SET_TIME_ZONE
+SET_WALLPAPER
+SET_WALLPAPER_HINTS
+TRANSMIT_IR
+USE_FINGERPRINT
+VIBRATE
+WAKE_LOCK
+WRITE_SYNC_SETTINGS
+SET_ALARM
+INSTALL_SHORTCUT
+UNINSTALL_SHORTCUT
+</code></pre><h3 id="Dangerous-Permissions－危险权限"><a href="#Dangerous-Permissions－危险权限" class="headerlink" title="Dangerous Permissions－危险权限"></a>Dangerous Permissions－危险权限</h3><p>这些权限都是一些敏感性权限，一些广告平台或是流氓应用会用这些权限干一些坏坏的事情，因此系统将这类权限分了几个类别，<br>应用每次都要检测下是否有权限，没有的化必须弹出对话框申请，只要一个组别中的一个权限得到了授权，整个组的权限都会的到授权．</p>
+<p>这部分权限也是我们重点在Ｍ系统上关注和适配的部分．<br><a href="http://developer.android.com/intl/zh-cn/guide/topics/security/permissions.html#normal-dangerous" target="_blank" rel="external">官网权威说明</a>, 具体相关权限见图：</p>
+<p><img src="./android-permission/danger.png" alt="Dangerous Permission"></p>
+<h3 id="Special-Permissions-特殊权限"><a href="#Special-Permissions-特殊权限" class="headerlink" title="Special Permissions- 特殊权限"></a>Special Permissions- 特殊权限</h3><p>SYSTEM_ALERT_WINDOW and WRITE_SETTINGS, 这两个权限比较特殊，不能通过代码申请方式获取，必须得用户打开软件设置页手动打开，才能授权．</p>
+<blockquote>
+<p>There are a couple of permissions that don’t behave like normal and dangerous permissions. SYSTEM_ALERT_WINDOW and WRITE_SETTINGS are particularly sensitive, so most apps should not use them. If an app needs one of these permissions, it must declare the permission in the manifest, and send an intent requesting the user’s authorization. The system responds to the intent by showing a detailed management screen to the user.</p>
+</blockquote>
+<p><a href="http://developer.android.com/intl/zh-cn/reference/android/Manifest.permission.html#SYSTEM_ALERT_WINDOW" target="_blank" rel="external">特殊权限官网推荐用法</a></p>
+<h2 id="实战Android-m权限申请用法"><a href="#实战Android-m权限申请用法" class="headerlink" title="实战Android m权限申请用法"></a>实战Android m权限申请用法</h2><p>我们对相关申请方法封装成了工具类，方便ｍ系统适配随时调用．</p>
+<h3 id="相关配置"><a href="#相关配置" class="headerlink" title="相关配置"></a>相关配置</h3><p>compileSdkVersion and targetSdkVersion 设置为 23开始</p>
+<h3 id="调用相关权限"><a href="#调用相关权限" class="headerlink" title="调用相关权限"></a>调用相关权限</h3><pre><code>private void testAlertPermission() {
+    WindowManager mWindowManager = (WindowManager) getSystemService(
+            Context.WINDOW_SERVICE);
+    WindowManager.LayoutParams params = new WindowManager.LayoutParams();
+    params.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
+    mWindowManager.addView(new TextView(this), params);
+}
+</code></pre><h3 id="权限申请相关代码"><a href="#权限申请相关代码" class="headerlink" title="权限申请相关代码"></a>权限申请相关代码</h3><pre><code>// Here, thisActivity is the current activity
+if (ContextCompat.checkSelfPermission(thisActivity,
+               Manifest.permission.READ_CONTACTS)
+        != PackageManager.PERMISSION_GRANTED) {
+
+   // Should we show an explanation?
+    if (ActivityCompat.shouldShowRequestPermissionRationale(thisActivity,
+           Manifest.permission.READ_CONTACTS)) {
+
+    // Show an expanation to the user *asynchronously* -- don&apos;t block
+    // this thread waiting for the user&apos;s response! After the user
+    // sees the explanation, try again to request the permission.
+
+     } else {
+
+    // No explanation needed, we can request the permission.
+
+    ActivityCompat.requestPermissions(thisActivity,
+            new String[]{Manifest.permission.READ_CONTACTS},
+            MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+
+    // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+    // app-defined int constant. The callback method gets the
+    // result of the request.
+      }
+}
+</code></pre><p>requestPermissions方法调用时会弹出以下对话框．当用户点击拒绝并且勾选了不再弹出后这个对话框将不会再弹出，会直接拒绝掉该权限：<br><img src="./android-permission/single_p.png" alt="requestPermissions"></p>
+<h4 id="shouldShowRequestPermissionRationale方法说明"><a href="#shouldShowRequestPermissionRationale方法说明" class="headerlink" title="shouldShowRequestPermissionRationale方法说明"></a>shouldShowRequestPermissionRationale方法说明</h4><p>用户拒绝，或是不在弹出，这个方法会返回false．<br><img src="./android-permission/should.png" alt="返回说明"></p>
+<h4 id="Activity和Fragment的申请方法不一样，所以我们对方法做了包装如下："><a href="#Activity和Fragment的申请方法不一样，所以我们对方法做了包装如下：" class="headerlink" title="Ａctivity和Ｆragment的申请方法不一样，所以我们对方法做了包装如下："></a>Ａctivity和Ｆragment的申请方法不一样，所以我们对方法做了包装如下：</h4><pre><code>@TargetApi(Build.VERSION_CODES.M)
+public static boolean checkPermission(Object cxt, String permission, int requestCode) {
+    if (!checkSelfPermissionWrapper(cxt, permission)) {
+        if (!shouldShowRequestPermissionRationaleWrapper(cxt, permission)) {
+            requestPermissionsWrapper(cxt, new String[]{permission}, requestCode);
+        } else {
+            Log.d(TAG, &quot;should show rational&quot;);
+        }
+        return false;
+    }
+    return true;
+}
+
+private static void requestPermissionsWrapper(Object cxt, String[] permission, int requestCode) {
+    if (cxt instanceof Activity) {
+        Activity activity = (Activity) cxt;
+        ActivityCompat.requestPermissions(activity, permission, requestCode);
+    } else if (cxt instanceof Fragment) {
+        Fragment fragment = (Fragment) cxt;
+        fragment.requestPermissions(permission, requestCode);
+    } else {
+        throw new RuntimeException(&quot;cxt is net a activity or fragment&quot;);
+    }
+}
+</code></pre><h4 id="权限可以一次申请多个"><a href="#权限可以一次申请多个" class="headerlink" title="权限可以一次申请多个"></a>权限可以一次申请多个</h4><p>如图一次可以申请多个权限，但是用户还是一个一个授权．我们对该请求也做了封装：<br><img src="./android-permission/mult_p1.png" alt="multi"> <img src="./android-permission/mult_2.png" alt="multi"></p>
+<pre><code>@TargetApi(23)
+private static boolean checkSelfPermissionWrapper(Object cxt, String permission) {
+    if (cxt instanceof Activity) {
+        Activity activity = (Activity) cxt;
+        return ActivityCompat.checkSelfPermission(activity,
+                permission) == PackageManager.PERMISSION_GRANTED;
+    } else if (cxt instanceof Fragment) {
+        Fragment fragment = (Fragment) cxt;
+        return fragment.getActivity().checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
+    } else {
+        throw new RuntimeException(&quot;cxt is net a activity or fragment&quot;);
+    }
+}
+
+private static String[] checkSelfPermissionArray(Object cxt, String[] permission) {
+    ArrayList&lt;String&gt; permiList = new ArrayList&lt;&gt;();
+    for (String p : permission) {
+        if (!checkSelfPermissionWrapper(cxt, p)) {
+            permiList.add(p);
+        }
+    }
+
+    return permiList.toArray(new String[permiList.size()]);
+}
+</code></pre><h3 id="权限返回处理"><a href="#权限返回处理" class="headerlink" title="权限返回处理"></a>权限返回处理</h3><p>在activity或fragment 中重写onRequestPermissionsResult，用户处理相关权限后会回调该方法，当活取到相关应用后可以继续原来的逻辑．</p>
+<pre><code>@Override
+public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    switch (requestCode) {
+        case PermissionUtils.PERMISSION_REQUEST_CODE:
+            if (PermissionUtils.verifyPermissions(grantResults)) {
+                // Permission Granted
+                // do you action
+            } else {
+                // Permission Denied
+                Toast.makeText(this, &quot;WRITE_CONTACTS Denied&quot;, Toast.LENGTH_SHORT)
+                        .show();
+            }
+            break;
+        default:
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+}
+
+public static boolean verifyPermissions(int[] grantResults) {
+    // At least one result must be checked.
+    if (grantResults.length &lt; 1) {
+        return false;
+    }
+
+    // Verify that each required permission has been granted, otherwise return false.
+    for (int result : grantResults) {
+        if (result != PackageManager.PERMISSION_GRANTED) {
+            return false;
+        }
+    }
+    return true;
+}
+</code></pre><h2 id="特殊权限的申请"><a href="#特殊权限的申请" class="headerlink" title="特殊权限的申请"></a>特殊权限的申请</h2><p>以前特殊权限说明地方已经支出，该类权限需求intent到具体的设置页面，让用户手动打开，才能授权．<br>同样重写onActivityResult方法，返回该页面时做回调处理．</p>
+<p><img src="./android-permission/acces_in.png" alt="sp"></p>
+<p>系统弹出权限，相关代码实例：</p>
+<pre><code>/**
+ * 检测系统弹出权限
+ * @param cxt
+ * @param req
+ * @return
+ */
+@TargetApi(23)
+public static boolean checkSettingAlertPermission(Object cxt, int req) {
+    if (cxt instanceof Activity) {
+        Activity activity = (Activity) cxt;
+        if (!Settings.canDrawOverlays(activity.getBaseContext())) {
+            Log.i(TAG, &quot;Setting not permission&quot;);
+
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse(&quot;package:&quot; + activity.getPackageName()));
+            activity.startActivityForResult(intent, req);
+            return false;
+        }
+    } else if (cxt instanceof Fragment) {
+        Fragment fragment = (Fragment) cxt;
+        if (!Settings.canDrawOverlays(fragment.getActivity())) {
+            Log.i(TAG, &quot;Setting not permission&quot;);
+
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse(&quot;package:&quot; + fragment.getActivity().getPackageName()));
+            fragment.startActivityForResult(intent, req);
+            return false;
+        }
+    } else {
+        throw new RuntimeException(&quot;cxt is net a activity or fragment&quot;);
+    }
+
+    return true;
+}
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PermissionUtils.PERMISSION_SETTING_REQ_CODE) {
+            if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.M) {
+                if (Settings.canDrawOverlays(this)) {
+                    // do something
+                } else {
+                    Toast.makeText(this, &quot;not has setting permission&quot;, Toast.LENGTH_LONG).show();
+                    finish();
+                }
+            }
+        }
+    }
+</code></pre><h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>Android 6.0系统权限管理是安卓系统的一大进步，为安卓手机用户提供了一个安全干净系统前提，鉴于google对未授权应用的奔溃方式处理，<br>安卓开发者应当尽早适配6.0系统，提示软件体验．</p>
+<p>实战整体代码已提交到<a href="https://github.com/CankingApp/PermissionDemo" target="_blank" rel="external">GitHub</a>,欢迎下载交流学习～</p>
+<h2 id="License"><a href="#License" class="headerlink" title="License"></a>License</h2><pre><code>Copyright 2015 ChangXing
+
+Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+</code></pre></div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://cankingapp.github.io/2016/03/18/android-permission/" data-id="cim3atizw0005uo75aq4kn4hg" class="article-share-link">分享到</a><div class="tags"><a href="/tags/android/">android</a></div><div class="post-nav"><a href="/2016/03/18/python/" class="pre">Python入门-函数的使用到Python的发布安装</a><a href="/2016/03/18/notification-mgr/" class="next">NotificationListenerService 安卓通知栏管理详解及分析</a></div></div></div></div><div class="pure-u-1-4"><div id="sidebar"><div class="widget"><form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="search" name="word" maxlength="20" placeholder="Search"/><input type="hidden" name="si" value="http://cankingapp.github.io"/><input name="tn" type="hidden" value="bds"/><input name="cl" type="hidden" value="3"/><input name="ct" type="hidden" value="2097152"/><input name="s" type="hidden" value="on"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/android/">android</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/增量升级/" style="font-size: 15px;">增量升级</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/android/" style="font-size: 15px;">android</a> <a href="/tags/python/" style="font-size: 15px;">python</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/03/22/apk-backup/">安卓设备上备份已安装应用的apk包技术实现方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/18/python/">Python入门-函数的使用到Python的发布安装</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/18/android-permission/">Android 6.0系统中权限问题调用 - Permission in Android M</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/18/notification-mgr/">NotificationListenerService 安卓通知栏管理详解及分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/18/Hexo-blog/">Hexo-免费博客搭建使用讲解</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/17/hello-world/">Hello Hexo World !</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/06/18/2016-03-18-01/">增量升级项目</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://cankingapp.github.io/fitness/" title="健美计步器" target="_blank">健美计步器</a><ul></ul><a href="http://zhushou.360.cn/detail/index/soft_id/260762" title="充电助手" target="_blank">充电助手</a><ul></ul><a href="http://cankingapp.github.io/fitness/h5game/index.html" title="H5 Game" target="_blank">H5 Game</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">常兴 E 站.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> changxing</a> by<a rel="nofollow" target="_blank" href="https://github.com/CankingApp/"> Github.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
