@@ -51,7 +51,6 @@ sudo npm install -g n
 ```
     find . -name "node"
     find . -name "npm"
-
 ```
 删除所有搜索与node相关的结果
 
@@ -69,8 +68,15 @@ sudo npm install -g n
 
     To force the link and overwrite all conflicting files:
     brew link --overwrite node
-
 ```
 
-不用慌张，安装错误提示操作｀rm '/usr/local/lib/dtrace/node.d'｀ ， ｀brew link --overwrite node｀，后发现node －v 安装成功了。npm －v后确认，重装成果。node又恢复正常了！
+不用慌张，安照错误提示操作
+```
+rm '/usr/local/lib/dtrace/node.d'｀ 
+brew link --overwrite node
+```
+
+重新运行命令发现node －v 安装成功了。npm －v后确认，重装成果。
+
+node又恢复正常了！
 
