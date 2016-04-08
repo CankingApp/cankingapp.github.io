@@ -312,14 +312,14 @@ Android 6.0系统权限管理是安卓系统的一大进步，为安卓手机用
     See the License for the specific language governing permissions and
     limitations under the License.
 
-  [1]: ./single_p.png
-  [2]: ./per_show.png
-  [3]: ./mult_2.png
-  [4]: ./mult_p1.png
-  [5]: ./acces_in.png
-  [6]: ./error.png
+  [1]: ./android-permission/single_p.png
+  [2]: ./android-permission/per_show.png
+  [3]: ./android-permission/mult_2.png
+  [4]: ./android-permission/mult_p1.png
+  [5]: ./android-permission/acces_in.png
+  [6]: ./android-permission/error.png
   [7]: http://developer.android.com/intl/zh-cn/guide/topics/security/normal-permissions.html
   [8]: http://developer.android.com/intl/zh-cn/guide/topics/security/permissions.html#normal-dangerous
-  [9]: ./danger.png
+  [9]: ./android-permission/danger.png
   [10]: http://developer.android.com/intl/zh-cn/reference/android/Manifest.permission.html#SYSTEM_ALERT_WINDOW
-  [11]: ./should.png
+  [11]: ./android-permission/should.png
