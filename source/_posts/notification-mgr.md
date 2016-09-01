@@ -151,5 +151,5 @@ StatusBarNotification，多进程传递对象，所有通知信息都会在这�
 
 程序运行如下:
 
-![程序运行截图](./screenshot/scr_a.png)
-![程序运行截图](./screenshot/scr_b.png)
+![程序运行截图](scr_a.png)
+![程序运行截图](scr_b.png)
