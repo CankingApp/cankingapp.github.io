@@ -99,6 +99,7 @@ compileSdkVersion and targetSdkVersion 设置为 23开始
 
 ### 调用相关权限
 
+```
     private void testAlertPermission() {
         WindowManager mWindowManager = (WindowManager) getSystemService(
                 Context.WINDOW_SERVICE);
@@ -106,8 +107,11 @@ compileSdkVersion and targetSdkVersion 设置为 23开始
         params.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
         mWindowManager.addView(new TextView(this), params);
     }
+```
 
 ### 权限申请相关代码
+
+```
     // Here, thisActivity is the current activity
     if (ContextCompat.checkSelfPermission(thisActivity,
                    Manifest.permission.READ_CONTACTS)
@@ -134,7 +138,8 @@ compileSdkVersion and targetSdkVersion 设置为 23开始
         // result of the request.
           }
     }
-    
+```
+
 requestPermissions方法调用时会弹出以下对话框．当用户点击拒绝并且勾选了不再弹出后这个对话框将不会再弹出，会直接拒绝掉该权限：
 ![requestPermissions][1]
 
@@ -144,6 +149,7 @@ requestPermissions方法调用时会弹出以下对话框．当用户点击拒�
 
 #### Ａctivity和Ｆragment的申请方法不一样，所以我们对方法做了包装如下：
 
+```
     @TargetApi(Build.VERSION_CODES.M)
     public static boolean checkPermission(Object cxt, String permission, int requestCode) {
         if (!checkSelfPermissionWrapper(cxt, permission)) {
@@ -168,10 +174,13 @@ requestPermissions方法调用时会弹出以下对话框．当用户点击拒�
             throw new RuntimeException("cxt is net a activity or fragment");
         }
     }
+```
+
 #### 权限可以一次申请多个
 如图一次可以申请多个权限，但是用户还是一个一个授权．我们对该请求也做了封装：
 ![multi][4] ![multi][3]
 
+```
     @TargetApi(23)
     private static boolean checkSelfPermissionWrapper(Object cxt, String permission) {
         if (cxt instanceof Activity) {
@@ -196,9 +205,12 @@ requestPermissions方法调用时会弹出以下对话框．当用户点击拒�
 
         return permiList.toArray(new String[permiList.size()]);
     }
+```
+
 ### 权限返回处理
 在activity或fragment 中重写onRequestPermissionsResult，用户处理相关权限后会回调该方法，当活取到相关应用后可以继续原来的逻辑．
 
+```
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
@@ -231,6 +243,7 @@ requestPermissions方法调用时会弹出以下对话框．当用户点击拒�
         }
         return true;
     }
+```
 
 ## 特殊权限的申请
 以前特殊权限说明地方已经支出，该类权限需求intent到具体的设置页面，让用户手动打开，才能授权．
@@ -240,12 +253,13 @@ requestPermissions方法调用时会弹出以下对话框．当用户点击拒�
 
 系统弹出权限，相关代码实例：
 
-    /**
-     * 检测系统弹出权限
-     * @param cxt
-     * @param req
-     * @return
-     */
+```
+   /**
+    * 检测系统弹出权限
+    * @param cxt
+    * @param req
+    * @return
+    */
     @TargetApi(23)
     public static boolean checkSettingAlertPermission(Object cxt, int req) {
         if (cxt instanceof Activity) {
@@ -275,19 +289,60 @@ requestPermissions方法调用时会弹出以下对话框．当用户点击拒�
         return true;
     }
     
-        @Override
-        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-            if (requestCode == PermissionUtils.PERMISSION_SETTING_REQ_CODE) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (Settings.canDrawOverlays(this)) {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PermissionUtils.PERMISSION_SETTING_REQ_CODE) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (Settings.canDrawOverlays(this)) {
                         // do something
-                    } else {
+                } else {
                         Toast.makeText(this, "not has setting permission", Toast.LENGTH_LONG).show();
                         finish();
-                    }
                 }
-            }
+             }
         }
+    }
+```
+
+系统设置权限代码
+```
+    /**
+     * WRITE_SETTINGS 权限
+     * @param cxt
+     * @param req
+     * @return
+     */
+    @TargetApi(23)
+    public static boolean checkSettingSystemPermission(Object cxt, int req) {
+        if (cxt instanceof Activity) {
+            Activity activity = (Activity) cxt;
+            if (!Settings.System.canWrite(activity)) {
+                Log.i(TAG, "Setting not permission");
+
+                Intent intent = new Intent(android.provider.Settings.ACTION_MANAGE_WRITE_SETTINGS);
+                intent.setData(Uri.parse("package:" + activity.getPackageName()));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                activity.startActivityForResult(intent, req);
+                return false;
+            }
+        } else if (cxt instanceof Fragment) {
+            Fragment fragment = (Fragment) cxt;
+            if (!Settings.System.canWrite(fragment.getContext())) {
+                Log.i(TAG, "Setting not permission");
+
+                Intent intent = new Intent(android.provider.Settings.ACTION_MANAGE_WRITE_SETTINGS);
+                intent.setData(Uri.parse("package:" + fragment.getContext().getPackageName()));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                fragment.startActivityForResult(intent, req);
+                return false;
+            }
+        } else {
+            throw new RuntimeException("cxt is net a activity or fragment");
+        }
+
+        return true;
+    }
+```
 
 ## 结语
 Android 6.0系统权限管理是安卓系统的一大进步，为安卓手机用户提供了一个安全干净系统前提，鉴于google对未授权应用的奔溃方式处理，

@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://cankingapp.github.io/2016/03/18/android-permission/</loc>
+    
+    <lastmod>2016-09-01T08:14:25.676Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://cankingapp.github.io/2016/06/02/access-float/</loc>
+    
+    <lastmod>2016-06-02T11:27:50.622Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://cankingapp.github.io/2016/03/30/ffmpeg/</loc>
+    
+    <lastmod>2016-06-02T11:01:32.018Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://cankingapp.github.io/2016/04/08/npm-update-errer/</loc>
     
     <lastmod>2016-04-08T02:55:30.319Z</lastmod>
@@ -12,20 +33,6 @@
     <loc>http://cankingapp.github.io/2016/03/30/android-theme/</loc>
     
     <lastmod>2016-04-08T02:50:33.171Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://cankingapp.github.io/2016/03/30/ffmpeg/</loc>
-    
-    <lastmod>2016-04-08T02:50:33.171Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://cankingapp.github.io/2016/03/18/android-permission/</loc>
-    
-    <lastmod>2016-04-08T02:50:33.155Z</lastmod>
     
   </url>
   
