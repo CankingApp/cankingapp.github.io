@@ -13,7 +13,7 @@ tags: android
 ### 二. NotificationListenerService详解
 
 通知的新增和删除，都会回调你注册的NLS里的方法，这些信息可以通过StatusBarNotification类对象来获取。
-
+另外比较主要的是，系统开启通知读取服务后，系统就会对APP有个保活功能，当被系统或是第三方软件kill后，系统会将你的应用重启。很多厂商会利用这点做一些坏坏的事情。并且国内各大杀毒，清理软件都有开启该功能。
 #### NotificationListenerService主要方法(成员变量)：
 
 删除通知时会回调onNotificationRemoved, 新增通知或是更新时会回调onNotificationPosted
