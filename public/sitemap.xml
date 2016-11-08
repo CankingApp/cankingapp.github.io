@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://cankingapp.github.io/2016/11/08/text/</loc>
+    
+    <lastmod>2016-11-08T04:48:43.270Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://cankingapp.github.io/about/index.html</loc>
     
     <lastmod>2016-11-08T04:31:56.021Z</lastmod>
@@ -30,6 +37,13 @@
   </url>
   
   <url>
+    <loc>http://cankingapp.github.io/2016/11/08/git-log/</loc>
+    
+    <lastmod>2016-11-08T04:31:55.997Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://cankingapp.github.io/2016/03/30/ffmpeg/</loc>
     
     <lastmod>2016-11-08T04:31:55.997Z</lastmod>
@@ -38,13 +52,6 @@
   
   <url>
     <loc>http://cankingapp.github.io/2016/03/17/hello-world/</loc>
-    
-    <lastmod>2016-11-08T04:31:55.997Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://cankingapp.github.io/2016/11/08/git-log/</loc>
     
     <lastmod>2016-11-08T04:31:55.997Z</lastmod>
     
