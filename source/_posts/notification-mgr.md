@@ -7,7 +7,7 @@ tags: android
 
 
 ### 一. 方法概述
-在api 18前可以通过辅助功能'AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED'或是*反射*活取通知栏相关信息。
+android在api 18前可以通过辅助功能'AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED'或是*反射*活取通知栏相关信息。
 现在我们可以根据*NotificationListenerService*类非常容易的活取通知回调相关信息。
 <!--more-->
 ### 二. NotificationListenerService详解
