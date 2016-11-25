@@ -1,5 +1,5 @@
 fancybox: true ## If you want to use fancybox please set the value to true.
-duoshuo: ## Your duoshuo_shortname, e.g. username
+duoshuo: cankingapp ## Your duoshuo_shortname, e.g. username
 disqus: ## Your disqus_shortname, e.g. username
 google_search: false ## Use Google search, true/false.
 baidu_search: true ## Use Baidu search, true/false.
@@ -36,6 +36,7 @@ widgets: ## Six widgets in sidebar provided: search, category, tag, recent_posts
   - recent_posts
   - recent_comments
   - links
+  - weibo
 
 links:
   - title: 健美计步器

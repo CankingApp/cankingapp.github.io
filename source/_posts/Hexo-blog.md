@@ -174,22 +174,63 @@ $ hexo n #完整命令为hexo new,用于新建一篇文章
 
 ## 发表一篇文章
 
-### 1. ```$ hexo new "my new post"```
+### 1. 新建
+
+```
+$ hexo new "my new post" 
+```
 
 ### 2. 编辑 my-new-post.md
 
 ```
-	title: my new post #可以改成中文的，如“新文章”
-	date: 2015-04-08 22:56:29 #发表日期，一般不改动
-	categories: blog #文章文类
-	tags: [博客，文章] #文章标签，多于一项时用这种格式，只有一项时使用tags: blog
-	---
-	#这里是正文，用markdown写，你可以选择写一段显示在首页的简介后，加上<!--more-->，在<!--more-->之前的内容会显示在首页，之后的内容会被隐藏，当游客点击Read more才能看到。
+title: my new post #可以改成中文的，如“新文章”
+date: 2015-04-08 22:56:29 #发表日期，一般不改动
+categories: blog #文章文类
+tags: [博客，文章] #文章标签，多于一项时用这种格式，只有一项时使用tags: blog
+
 ```
+> 这里是正文，用markdown写，你可以选择写一段显示在首页的简介后，加上<!--more-->，在<!--more-->之前的内容会显示在首页，之后的内容会被隐藏，当游客点击Read more才能看到。
 
 ### 3.$ hexo g 生成静态文件
+
 ### 4.$ hexo d 同步到github
 
+## 插件扩展（补充）
+
+### 添加评论功能
+
+
+hexo 默认是支持Disqus的，但是由于国内网站屏蔽不太适合，so,这里推荐强大的 多说评论。
+
+*注册多说*　如图点击　**我要安装**，　然后按照要求填写，提交后即可活取嵌入代码。
+
+![](duoshuo.png)
+
+hexo众多的theme中有些默认也是支持hexo的，比如我正在用的maupassant，只要设置theme根目录下的_config.yml文件即可，例如如图所示填入多说申请的二级域名（user_shortname）.
+
+![_config.yml](config.png)
+
+如果你的theme中没有默认设置duoshuo,那么也要在config.yml中添加：duoshuo_shortname: yourname,并且修改theme/name/layout/partial/article.ejs, 没有article的要修改comments文件。在comments层替换从多说得到的代码。
+其中参数填写如下：
+
+```
+data-thread-key=page.path, data-title=page.title, data-url=page.permalink, data-author-key='1'
+```
+
+
+### 添加微博秀
+
+样式如下：![](xiudemo.png)
+
+在微博开发平台生气微博秀相关代码，设置相关测试后复制，如图
+
+![](weiboxiu.png)
+
+然后添加到hexo 博客theme中。在_widget目录下添加weibo.jade,拷贝得到的代码保存到里面。然后在根目录下_config.yml中添加控件，如下图：
+
+![](widget.png)
+
+保存后，重新编译部署即可看到效果。
 
 ----------
 ## 后续
