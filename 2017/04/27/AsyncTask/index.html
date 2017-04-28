@@ -10,8 +10,141 @@
 <p>多个任务同时使用时，默认会用串行化执行器，缺乏线程调度。<br>任务取消需要自行控制，有一定内存泄漏风险。</p>
 </blockquote>
 <h2 id="三、-类结构"><a href="#三、-类结构" class="headerlink" title="三、 类结构"></a>三、 类结构</h2><p><img src="AsyncTaskUml.png" alt="UML"></p>
-<h3 id="知道点"><a href="#知道点" class="headerlink" title="知道点"></a>知道点</h3><h4 id="1-WorkerRunable-and-FutureTask"><a href="#1-WorkerRunable-and-FutureTask" class="headerlink" title="1,WorkerRunable and FutureTask"></a>1,WorkerRunable and FutureTask</h4><p> 每new一个AsyncTask, 会在构造器中新建一个WorkerRunable 和 FutureTask.其中WorkerRunable 实现了Callable借口。</p>
-</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://cankingapp.github.io/2017/04/27/AsyncTask/" data-id="cj21hpe5k00005h3kaplk1r6s" class="article-share-link">分享到</a><div class="tags"><a href="/tags/源码/">源码</a></div><div class="post-nav"><a href="/2016/11/08/git-log/" class="pre">git log命令展示过滤技巧</a></div><div data-thread-key="2017/04/27/AsyncTask/" data-title="知识总结之 AsyncTask 源码解析" data-url="http://cankingapp.github.io/2017/04/27/AsyncTask/" class="ds-share flat"><div class="ds-share-inline"><ul class="ds-share-icons-16"><li data-toggle="ds-share-icons-more"><a href="javascript:void(0);" class="ds-more">分享到：</a></li><li><a href="javascript:void(0);" data-service="weibo" class="ds-weibo">微博</a></li><li><a href="javascript:void(0);" data-service="qzone" class="ds-qzone">QQ空间</a></li><li><a href="javascript:void(0);" data-service="qqt" class="ds-qqt">腾讯微博</a></li><li><a href="javascript:void(0);" data-service="wechat" class="ds-wechat">微信</a></li></ul><div class="ds-share-icons-more"></div></div></div><div data-thread-key="2017/04/27/AsyncTask/" data-title="知识总结之 AsyncTask 源码解析" data-url="http://cankingapp.github.io/2017/04/27/AsyncTask/" data-author-key="1" class="ds-thread"></div></div></div></div><div class="pure-u-1-4"><div id="sidebar"><div class="widget"><form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="search" name="word" maxlength="20" placeholder="Search"/><input type="hidden" name="si" value="http://cankingapp.github.io"/><input name="tn" type="hidden" value="bds"/><input name="cl" type="hidden" value="3"/><input name="ct" type="hidden" value="2097152"/><input name="s" type="hidden" value="on"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/android/">android</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/node/">node</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/tool/">tool</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/smart-update/" style="font-size: 15px;">smart update</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/float-permission/" style="font-size: 15px;">float permission</a> <a href="/tags/android/" style="font-size: 15px;">android</a> <a href="/tags/theme/" style="font-size: 15px;">theme</a> <a href="/tags/ffmpeg/" style="font-size: 15px;">ffmpeg</a> <a href="/tags/git/" style="font-size: 15px;">git</a> <a href="/tags/node/" style="font-size: 15px;">node</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/源码/" style="font-size: 15px;">源码</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/04/27/AsyncTask/">知识总结之 AsyncTask 源码解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/08/git-log/">git log命令展示过滤技巧</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/02/access-float/">辅助功能 之 小米手机悬浮窗权限</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/08/npm-update-errer/">Node 升级工具n 大坑</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/30/android-theme/">Android Theme-安卓样式换肤实践方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/30/ffmpeg/">视频转gif图片格式－好用的软件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/22/apk-backup/">安卓设备上备份已安装应用的apk包技术实现方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/18/python/">Python入门-函数的使用到Python的发布安装</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/18/android-permission/">Android 6.0系统中权限问题调用 - Permission in Android M</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/18/notification-mgr/">NotificationListenerService 安卓通知栏管理详解及分析</a></li></ul></div><div class="widget"><div class="comments-title"><i class="fa fa-comment-o"> 最近评论</i></div><div data-num-items="5" data-show-avatars="0" data-show-time="1" data-show-admin="0" data-excerpt-length="32" data-show-title="1" class="ds-recent-comments"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://cankingapp.github.io/fitness/" title="健美计步器" target="_blank">健美计步器</a><ul></ul><a href="http://zhushou.360.cn/detail/index/soft_id/260762" title="充电助手" target="_blank">充电助手</a><ul></ul><a href="http://sudoku.strikingly.com/" title="爱我数独" target="_blank">爱我数独</a><ul></ul><a href="http://stopwatch.strikingly.com/" title="精确秒表" target="_blank">精确秒表</a><ul></ul><a href="http://www.wandoujia.com/apps/net.canking.gameby" title="色 变" target="_blank">色 变</a><ul></ul><a href="http://canking.strikingly.com/" title="自我简介" target="_blank">自我简介</a><ul></ul><a href="http://cankingapp.github.io/fitness/h5game/index.html" title="H5 Game" target="_blank">H5 Game</a></div><iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&;fansRow=2&amp;ptype=1&amp;speed=0&amp;skin=1&amp;isTitle=1&amp;noborder=0&isWeibo=1&isFans=1&uid=1894127781&verifier=b6b87527&amp;dpc=1"></iframe></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">常兴 E 站.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> changxing</a> by<a rel="nofollow" target="_blank" href="https://github.com/CankingApp/"> Github.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script>var duoshuoQuery = {short_name:'cankingapp'};
+<h2 id="四、-知道点"><a href="#四、-知道点" class="headerlink" title="四、 知道点"></a>四、 知道点</h2><h3 id="1-WorkerRunable-and-FutureTask"><a href="#1-WorkerRunable-and-FutureTask" class="headerlink" title="1,WorkerRunable and FutureTask"></a>1,WorkerRunable and FutureTask</h3><p> 每new一个AsyncTask, 会在构造器中新建一个WorkerRunable 和 FutureTask。其中WorkerRunable 实现了Callable借口，其作用个人理解只是 实际任务执行与调度器FutureTask 的一个沟通桥梁，<br> 而FutureTask作为每次任务的一次封装，被放入Execute等代线程池执行。</p>
+<h3 id="2，SerialExecutor"><a href="#2，SerialExecutor" class="headerlink" title="2，SerialExecutor"></a>2，SerialExecutor</h3><p>‘’‘<br>    /**</p>
+<pre><code> * Creates a new asynchronous task. This constructor must be invoked on the UI thread.
+ */
+public AsyncTask() {
+    mWorker = new WorkerRunnable&lt;Params, Result&gt;() {
+        public Result call() throws Exception {
+            mTaskInvoked.set(true);
+            Result result = null;
+            try {
+                Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
+                //noinspection unchecked
+                result = doInBackground(mParams);
+                Binder.flushPendingCommands();
+            } catch (Throwable tr) {
+                mCancelled.set(true);
+                throw tr;
+            } finally {
+                postResult(result);
+            }
+            return result;
+        }
+    };
+
+    mFuture = new FutureTask&lt;Result&gt;(mWorker) {
+        @Override
+        protected void done() {
+            try {
+                postResultIfNotInvoked(get());
+            } catch (InterruptedException e) {
+                android.util.Log.w(LOG_TAG, e);
+            } catch (ExecutionException e) {
+                throw new RuntimeException(&quot;An error occurred while executing doInBackground()&quot;,
+                        e.getCause());
+            } catch (CancellationException e) {
+                postResultIfNotInvoked(null);
+            }
+        }
+    };
+}
+</code></pre><p>‘’‘</p>
+<p>任务执行器，可以说是Task调度器，决定了每个task是按照什么规程执行。实现了Executor接口，用ArrayDeque保存了放进了的task。</p>
+<p>‘’’<br>    /**</p>
+<pre><code> * An {@link Executor} that executes tasks one at a time in serial
+ * order.  This serialization is global to a particular process.
+ */
+public static final Executor SERIAL_EXECUTOR = new SerialExecutor();
+
+private static volatile Executor sDefaultExecutor = SERIAL_EXECUTOR;
+</code></pre><p>‘’’</p>
+<p>‘’‘<br>    private static final BlockingQueue<runnable> sPoolWorkQueue =<br>            new LinkedBlockingQueue<runnable>(128);</runnable></runnable></p>
+<p>   static {<br>        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(<br>                CORE_POOL_SIZE, MAXIMUM_POOL_SIZE, KEEP_ALIVE_SECONDS, TimeUnit.SECONDS,<br>                sPoolWorkQueue, sThreadFactory);<br>        threadPoolExecutor.allowCoreThreadTimeOut(true);<br>        THREAD_POOL_EXECUTOR = threadPoolExecutor;<br>    }</p>
+<p>’‘’<br>从这里可以看出AsyncTask默认的调度执行器用的这个SerialExecutor，SERIAL_EXECUTOR为静态类型，而这个类决定了Task是串行执行，且每个进程共享一个执行器，所以需要自己保证任务执行的优先级及频率。<br>THREAD_POOL_EXECUTOR线程池，BlockingQueue初始化大小为128，说明了线程池中runable个数超过128时，将会阻塞，影响性能及正常使用。</p>
+<p>‘’‘<br> private static class SerialExecutor implements Executor {<br>        final ArrayDeque<runnable> mTasks = new ArrayDeque<runnable>();<br>        Runnable mActive;</runnable></runnable></p>
+<pre><code>    public synchronized void execute(final Runnable r) {
+        mTasks.offer(new Runnable() {
+            public void run() {
+                try {
+                    r.run();
+                } finally {
+                    scheduleNext();
+                }
+            }
+        });
+        if (mActive == null) {
+            scheduleNext();
+        }
+    }
+
+    protected synchronized void scheduleNext() {
+        if ((mActive = mTasks.poll()) != null) {
+            THREAD_POOL_EXECUTOR.execute(mActive);
+        }
+    }
+}
+</code></pre><p>’‘’</p>
+<h3 id="3，执行入口跟踪"><a href="#3，执行入口跟踪" class="headerlink" title="3，执行入口跟踪"></a>3，执行入口跟踪</h3><p>‘’‘<br>    @MainThread<br>    public final AsyncTask<params, progress,="" result=""> execute(Params… params) {<br>        return executeOnExecutor(sDefaultExecutor, params);<br>    }</params,></p>
+<pre><code>* &lt;p&gt;This method must be invoked on the UI thread.
+ *
+ * @param exec The executor to use.  {@link #THREAD_POOL_EXECUTOR} is available as a
+ *              convenient process-wide thread pool for tasks that are loosely coupled.
+ * @param params The parameters of the task.
+ *
+ * @return This instance of AsyncTask.
+ *
+ * @throws IllegalStateException If {@link #getStatus()} returns either
+ *         {@link AsyncTask.Status#RUNNING} or {@link AsyncTask.Status#FINISHED}.
+ *
+ * @see #execute(Object[])
+ */
+@MainThread
+public final AsyncTask&lt;Params, Progress, Result&gt; executeOnExecutor(Executor exec,
+        Params... params) {
+    if (mStatus != Status.PENDING) {
+        switch (mStatus) {
+            case RUNNING:
+                throw new IllegalStateException(&quot;Cannot execute task:&quot;
+                        + &quot; the task is already running.&quot;);
+            case FINISHED:
+                throw new IllegalStateException(&quot;Cannot execute task:&quot;
+                        + &quot; the task has already been executed &quot;
+                        + &quot;(a task can be executed only once)&quot;);
+        }
+    }
+
+    mStatus = Status.RUNNING;
+
+    onPreExecute();
+
+    mWorker.mParams = params;
+    exec.execute(mFuture);
+
+    return this;
+}
+</code></pre><p>’‘’<br>上面方法为执行方法入口，这里可以自定义执行调度器Executor，实现自己的Task调度规则。</p>
+<p>建议适当使用AsyncTask，单纯的后台任务可以用线程池，如果有大量后台执行调度任务，建议使用JobQueue开源组件，当然可以自己升级JobQueue，<br>添加JobScheduler支持。</p>
+<h3 id="4-BlockingQueue"><a href="#4-BlockingQueue" class="headerlink" title="4. BlockingQueue"></a>4. BlockingQueue</h3><p>BlockingQueue很好的解决了多线程中，如何高效安全“传输”数据的问题。通过这些高效并且线程安全的队列类，为我们快速搭建高质量的多线程程序带来极大的便利。某些情况下会挂起线程（即阻塞），一旦条件满足，被挂起的线程又会自动被唤醒</p>
+<p>该类为多线程环境下的生产者与消费者资源的竞争提供了有效的调度共享规则。</p>
+<p><em>方法</em></p>
+<ul>
+<li>offer，如果可能将对象放入队列, 返回true。反之false。可加参数 时间 给以一定时间限制。</li>
+<li>put， 如果可能将对象放入队列，反之将阻塞，直到条件满足。</li>
+<li>poll， 从队列拿出一个对象，取不到返回null。可加参数 时间 给以一定时间限制。</li>
+<li>take 取出对象，否则阻塞等待返回对象。</li>
+<li>drainTo 一次性获取所有对象</li>
+</ul>
+<p><em>子类</em></p>
+<ul>
+<li>ArrayBlockingQueue, 长数组实现，整形变量控制头部和尾部。</li>
+<li>LinkedBlockingQueue, 内部缓存队列由链表组成，默认为无限大。</li>
+<li>DelayQueue，没有大小限制，so生产者永不会由阻塞，只手消费者才会。</li>
+<li>PriorityBlockingQueue, 基于优先级，不会阻塞数据生产者，只会在没有可消费的数据时，阻塞消费者。</li>
+<li>SynchronousQueue, 无缓冲等待队列，等于没有缓存的BlockingQueue，随时可能阻塞。</li>
+</ul>
+</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://cankingapp.github.io/2017/04/27/AsyncTask/" data-id="cj21prgjg00026p3kk2lafp17" class="article-share-link">分享到</a><div class="tags"><a href="/tags/源码/">源码</a></div><div class="post-nav"><a href="/2016/11/08/git-log/" class="pre">git log命令展示过滤技巧</a></div><div data-thread-key="2017/04/27/AsyncTask/" data-title="知识总结之 AsyncTask 源码解析" data-url="http://cankingapp.github.io/2017/04/27/AsyncTask/" class="ds-share flat"><div class="ds-share-inline"><ul class="ds-share-icons-16"><li data-toggle="ds-share-icons-more"><a href="javascript:void(0);" class="ds-more">分享到：</a></li><li><a href="javascript:void(0);" data-service="weibo" class="ds-weibo">微博</a></li><li><a href="javascript:void(0);" data-service="qzone" class="ds-qzone">QQ空间</a></li><li><a href="javascript:void(0);" data-service="qqt" class="ds-qqt">腾讯微博</a></li><li><a href="javascript:void(0);" data-service="wechat" class="ds-wechat">微信</a></li></ul><div class="ds-share-icons-more"></div></div></div><div data-thread-key="2017/04/27/AsyncTask/" data-title="知识总结之 AsyncTask 源码解析" data-url="http://cankingapp.github.io/2017/04/27/AsyncTask/" data-author-key="1" class="ds-thread"></div></div></div></div><div class="pure-u-1-4"><div id="sidebar"><div class="widget"><form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="search" name="word" maxlength="20" placeholder="Search"/><input type="hidden" name="si" value="http://cankingapp.github.io"/><input name="tn" type="hidden" value="bds"/><input name="cl" type="hidden" value="3"/><input name="ct" type="hidden" value="2097152"/><input name="s" type="hidden" value="on"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/android/">android</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/node/">node</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/tool/">tool</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/smart-update/" style="font-size: 15px;">smart update</a> <a href="/tags/源码/" style="font-size: 15px;">源码</a> <a href="/tags/android/" style="font-size: 15px;">android</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/float-permission/" style="font-size: 15px;">float permission</a> <a href="/tags/theme/" style="font-size: 15px;">theme</a> <a href="/tags/ffmpeg/" style="font-size: 15px;">ffmpeg</a> <a href="/tags/git/" style="font-size: 15px;">git</a> <a href="/tags/node/" style="font-size: 15px;">node</a> <a href="/tags/python/" style="font-size: 15px;">python</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/04/27/AsyncTask/">知识总结之 AsyncTask 源码解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/08/git-log/">git log命令展示过滤技巧</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/02/access-float/">辅助功能 之 小米手机悬浮窗权限</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/08/npm-update-errer/">Node 升级工具n 大坑</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/30/android-theme/">Android Theme-安卓样式换肤实践方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/30/ffmpeg/">视频转gif图片格式－好用的软件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/22/apk-backup/">安卓设备上备份已安装应用的apk包技术实现方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/18/python/">Python入门-函数的使用到Python的发布安装</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/18/android-permission/">Android 6.0系统中权限问题调用 - Permission in Android M</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/18/notification-mgr/">NotificationListenerService 安卓通知栏管理详解及分析</a></li></ul></div><div class="widget"><div class="comments-title"><i class="fa fa-comment-o"> 最近评论</i></div><div data-num-items="5" data-show-avatars="0" data-show-time="1" data-show-admin="0" data-excerpt-length="32" data-show-title="1" class="ds-recent-comments"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://cankingapp.github.io/fitness/" title="健美计步器" target="_blank">健美计步器</a><ul></ul><a href="http://zhushou.360.cn/detail/index/soft_id/260762" title="充电助手" target="_blank">充电助手</a><ul></ul><a href="http://sudoku.strikingly.com/" title="爱我数独" target="_blank">爱我数独</a><ul></ul><a href="http://stopwatch.strikingly.com/" title="精确秒表" target="_blank">精确秒表</a><ul></ul><a href="http://www.wandoujia.com/apps/net.canking.gameby" title="色 变" target="_blank">色 变</a><ul></ul><a href="http://canking.strikingly.com/" title="自我简介" target="_blank">自我简介</a><ul></ul><a href="http://cankingapp.github.io/fitness/h5game/index.html" title="H5 Game" target="_blank">H5 Game</a></div><iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&;fansRow=2&amp;ptype=1&amp;speed=0&amp;skin=1&amp;isTitle=1&amp;noborder=0&isWeibo=1&isFans=1&uid=1894127781&verifier=b6b87527&amp;dpc=1"></iframe></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">常兴 E 站.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> changxing</a> by<a rel="nofollow" target="_blank" href="https://github.com/CankingApp/"> Github.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script>var duoshuoQuery = {short_name:'cankingapp'};
 (function() {
     var ds = document.createElement('script');
     ds.type = 'text/javascript';ds.async = true;
