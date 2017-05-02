@@ -281,7 +281,7 @@ function mergeMappings(state, destination, source, overridableKeys) {
   }
 }
 
-function storeMappingPair(state, _result, overridableKeys, keyTag, keyNode, valueNode) {
+function storeMappingPair(state, _result, overridableKeys, keyTag, keyNode, valueNode, startLine, startPos) {
   var index, quantity;
 
   keyNode = String(keyNode);
@@ -302,6 +302,8 @@ function storeMappingPair(state, _result, overridableKeys, keyTag, keyNode, valu
     if (!state.json &&
         !_hasOwnProperty.call(overridableKeys, keyNode) &&
         _hasOwnProperty.call(_result, keyNode)) {
+      state.line = startLine || state.line;
+      state.position = startPos || state.position;
       throwError(state, 'duplicated mapping key');
     }
     _result[keyNode] = valueNode;
@@ -532,8 +534,9 @@ function readSingleQuotedScalar(state, nodeIndent) {
       ch = state.input.charCodeAt(++state.position);
 
       if (ch === 0x27/* ' */) {
-        captureStart = captureEnd = state.position;
+        captureStart = state.position;
         state.position++;
+        captureEnd = state.position;
       } else {
         return true;
       }
@@ -743,6 +746,7 @@ function readBlockScalar(state, nodeIndent) {
   var captureStart,
       folding,
       chomping       = CHOMPING_CLIP,
+      didReadContent = false,
       detectedIndent = false,
       textIndent     = nodeIndent,
       emptyLines     = 0,
@@ -824,9 +828,9 @@ function readBlockScalar(state, nodeIndent) {
 
       // Perform the chomping.
       if (chomping === CHOMPING_KEEP) {
-        state.result += common.repeat('\n', emptyLines);
+        state.result += common.repeat('\n', didReadContent ? 1 + emptyLines : emptyLines);
       } else if (chomping === CHOMPING_CLIP) {
-        if (detectedIndent) { // i.e. only if the scalar is not empty.
+        if (didReadContent) { // i.e. only if the scalar is not empty.
           state.result += '\n';
         }
       }
@@ -841,7 +845,8 @@ function readBlockScalar(state, nodeIndent) {
       // Lines starting with white space characters (more-indented lines) are not folded.
       if (is_WHITE_SPACE(ch)) {
         atMoreIndented = true;
-        state.result += common.repeat('\n', emptyLines + 1);
+        // except for the first content line (cf. Example 8.1)
+        state.result += common.repeat('\n', didReadContent ? 1 + emptyLines : emptyLines);
 
       // End of more-indented block.
       } else if (atMoreIndented) {
@@ -850,7 +855,7 @@ function readBlockScalar(state, nodeIndent) {
 
       // Just one line break - perceive as the same line.
       } else if (emptyLines === 0) {
-        if (detectedIndent) { // i.e. only if we have already read some scalar content.
+        if (didReadContent) { // i.e. only if we have already read some scalar content.
           state.result += ' ';
         }
 
@@ -860,14 +865,12 @@ function readBlockScalar(state, nodeIndent) {
       }
 
     // Literal style: just add exact number of line breaks between content lines.
-    } else if (detectedIndent) {
-      // If current line isn't the first one - count line break from the last content line.
-      state.result += common.repeat('\n', emptyLines + 1);
     } else {
-      // In case of the first content line - count only empty lines.
-      state.result += common.repeat('\n', emptyLines);
+      // Keep all line breaks except the header line break.
+      state.result += common.repeat('\n', didReadContent ? 1 + emptyLines : emptyLines);
     }
 
+    didReadContent = true;
     detectedIndent = true;
     emptyLines = 0;
     captureStart = state.position;
@@ -948,6 +951,7 @@ function readBlockMapping(state, nodeIndent, flowIndent) {
   var following,
       allowCompact,
       _line,
+      _pos,
       _tag          = state.tag,
       _anchor       = state.anchor,
       _result       = {},
@@ -968,6 +972,7 @@ function readBlockMapping(state, nodeIndent, flowIndent) {
   while (ch !== 0) {
     following = state.input.charCodeAt(state.position + 1);
     _line = state.line; // Save the current line.
+    _pos = state.position;
 
     //
     // Explicit notation case. There are two separate blocks:
@@ -1062,7 +1067,7 @@ function readBlockMapping(state, nodeIndent, flowIndent) {
       }
 
       if (!atExplicitKey) {
-        storeMappingPair(state, _result, overridableKeys, keyTag, keyNode, valueNode);
+        storeMappingPair(state, _result, overridableKeys, keyTag, keyNode, valueNode, _line, _pos);
         keyTag = keyNode = valueNode = null;
       }
 
@@ -1378,8 +1383,8 @@ function composeNode(state, parentIndent, nodeContext, allowToSeek, allowCompact
           break;
         }
       }
-    } else if (_hasOwnProperty.call(state.typeMap, state.tag)) {
-      type = state.typeMap[state.tag];
+    } else if (_hasOwnProperty.call(state.typeMap[state.kind || 'fallback'], state.tag)) {
+      type = state.typeMap[state.kind || 'fallback'][state.tag];
 
       if (state.result !== null && type.kind !== state.kind) {
         throwError(state, 'unacceptable node kind for !<' + state.tag + '> tag; it should be "' + type.kind + '", not "' + state.kind + '"');

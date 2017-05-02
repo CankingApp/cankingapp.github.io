@@ -53,7 +53,8 @@ function Hexo(base, args) {
     init: false
   };
 
-  this.config_path = args.config ? pathFn.resolve(base, args.config)
+  var multiConfigPath = require('./multi_config_path')(this);
+  this.config_path = args.config ? multiConfigPath(base, args.config)
                                  : pathFn.join(base, '_config.yml');
 
   this.extend = {
@@ -324,7 +325,7 @@ Hexo.prototype._generate = function(options) {
   Locals.prototype.view_dir = pathFn.join(this.theme_dir, 'layout') + sep;
 
   // Run before_generate filters
-  return this.execFilter('before_generate', null, {context: this})
+  return this.execFilter('before_generate', self.locals.get('data'), {context: this})
   .then(function() {
     self.locals.invalidate();
     siteLocals = self.locals.toObject();

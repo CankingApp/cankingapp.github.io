@@ -1,4 +1,5 @@
- [![npm version](https://img.shields.io/npm/v/bunyan.svg?style=flat)](https://www.npmjs.com/package/bunyan)
+[![npm version](https://img.shields.io/npm/v/bunyan.svg?style=flat)](https://www.npmjs.com/package/bunyan)
+[![Build Status](https://travis-ci.org/trentm/node-bunyan.svg?branch=master)](https://travis-ci.org/trentm/node-bunyan)
 
 Bunyan is **a simple and fast JSON logging library** for node.js services:
 
@@ -17,8 +18,49 @@ that. A log record is one line of `JSON.stringify`'d output. Let's also
 specify some common names for the requisite and common fields for a log
 record (see below).
 
-Also: log4j is way more than you need.
 
+## Table of Contents
+
+<!-- toc -->
+
+- [Current Status](#current-status)
+- [Installation](#installation)
+- [Features](#features)
+- [Introduction](#introduction)
+  * [Constructor API](#constructor-api)
+  * [Log Method API](#log-method-api)
+  * [CLI Usage](#cli-usage)
+  * [Streams Introduction](#streams-introduction)
+  * [log.child](#logchild)
+  * [Serializers](#serializers)
+    + [Requirements for serializers functions](#requirements-for-serializers-functions)
+    + [Standard Serializers](#standard-serializers)
+  * [src](#src)
+- [Levels](#levels)
+  * [Level suggestions](#level-suggestions)
+- [Log Record Fields](#log-record-fields)
+  * [Core fields](#core-fields)
+  * [Recommended/Best Practice Fields](#recommendedbest-practice-fields)
+  * [Other fields to consider](#other-fields-to-consider)
+- [Streams](#streams)
+  * [Adding a Stream](#adding-a-stream)
+  * [stream errors](#stream-errors)
+  * [stream type: `stream`](#stream-type-stream)
+  * [stream type: `file`](#stream-type-file)
+  * [stream type: `rotating-file`](#stream-type-rotating-file)
+  * [stream type: `raw`](#stream-type-raw)
+  * [`raw` + RingBuffer Stream](#raw--ringbuffer-stream)
+  * [third-party streams](#third-party-streams)
+- [Runtime log snooping via DTrace](#runtime-log-snooping-via-dtrace)
+  * [DTrace examples](#dtrace-examples)
+- [Runtime environments](#runtime-environments)
+  * [Browserify](#browserify)
+  * [Webpack](#webpack)
+- [Versioning](#versioning)
+- [License](#license)
+- [See Also](#see-also)
+
+<!-- tocstop -->
 
 # Current Status
 
@@ -58,7 +100,7 @@ node.js library usage of bunyan in your apps.
 - custom rendering of logged objects with ["serializers"](#serializers)
 - [Runtime log snooping via DTrace support](#runtime-log-snooping-via-dtrace)
 - Support for a few [runtime environments](#runtime-environments): Node.js,
-  [Browserify](http://browserify.org/), [NW.js](http://nwjs.io/).
+  [Browserify](http://browserify.org/), [Webpack](https://webpack.github.io/), [NW.js](http://nwjs.io/).
 
 
 # Introduction
@@ -163,7 +205,7 @@ pretty-printing bunyan logs** and for **filtering** (e.g.
 `| bunyan -c 'this.foo == "bar"'`). Using our example above:
 
 ```sh
-$ node hi.js | ./bin/bunyan
+$ node hi.js | ./node_modules/.bin/bunyan
 [2013-01-04T19:01:18.241Z]  INFO: myapp/40208 on banana.local: hi
 [2013-01-04T19:01:18.242Z]  WARN: myapp/40208 on banana.local: au revoir (lang=fr)
 ```
@@ -334,10 +376,56 @@ var log = bunyan.createLogger({name: 'myapp'});
 log.addSerializers({req: reqSerializer});
 ```
 
+### Requirements for serializers functions
 
-**Note**: Your own serializers should never throw, otherwise you'll get an
-ugly message on stderr from Bunyan (along with the traceback) and the field
-in your log record will be replaced with a short error message.
+A serializer function is passed unprotected objects that are passed to the
+`log.info`, `log.debug`, etc. call. This means a poorly written serializer
+function can case side-effects. Logging shouldn't do that. Here are a few
+rules and best practices for serializer functions:
+
+- A serializer function *should never throw*. The bunyan library *does*
+  protect somewhat from this: if the serializer throws an error, then
+  bunyan will (a) write an ugly message on stderr (along with the traceback),
+  and (b) the field in the log record will be replace with a short error message.
+  For example:
+
+    ```
+    bunyan: ERROR: Exception thrown from the "foo" Bunyan serializer. This should never happen. This is a bug in that serializer function.
+    TypeError: Cannot read property 'not' of undefined
+        at Object.fooSerializer [as foo] (/Users/trentm/tm/node-bunyan/bar.js:8:26)
+        at /Users/trentm/tm/node-bunyan/lib/bunyan.js:873:50
+        at Array.forEach (native)
+        at Logger._applySerializers (/Users/trentm/tm/node-bunyan/lib/bunyan.js:865:35)
+        at mkRecord (/Users/trentm/tm/node-bunyan/lib/bunyan.js:978:17)
+        at Logger.info (/Users/trentm/tm/node-bunyan/lib/bunyan.js:1044:19)
+        at Object.<anonymous> (/Users/trentm/tm/node-bunyan/bar.js:13:5)
+        at Module._compile (module.js:409:26)
+        at Object.Module._extensions..js (module.js:416:10)
+        at Module.load (module.js:343:32)
+    {"name":"bar","hostname":"danger0.local","pid":47411,"level":30,"foo":"(Error in Bunyan log \"foo\" serializer broke field. See stderr for details.)","msg":"one","time":"2017-03-08T02:53:51.173Z","v":0}
+    ```
+
+- A serializer function *should never mutate the given object*. Doing so will
+  change the object in your application.
+
+- A serializer function *should be defensive*. In my experience it is common to
+  set a serializer in an app, say for field name "foo", and then accidentally
+  have a log line that passes a "foo" that is undefined, or null, or of some
+  unexpected type. A good start at defensiveness is to start with this:
+
+    ```javascript
+    function fooSerializers(foo) {
+        // Guard against foo be null/undefined. Check that expected fields
+        // are defined.
+        if (!foo || !foo.bar)
+            return foo;
+        var obj = {
+            // Create the object to be logged.
+            bar: foo.bar
+        }
+        return obj;
+    };
+    ```
 
 
 ### Standard Serializers
@@ -467,7 +555,7 @@ time and sifting through them when an error occurs.
 Trent's biased suggestions for node.js libraries: IMHO, libraries should only
 ever log at `trace`-level. Fine control over log output should be up to the
 app using a library. Having a library that spews log output at higher levels
-gets in the way of the a clear story in the *app* logs.
+gets in the way of a clear story in the *app* logs.
 
 
 # Log Record Fields
@@ -653,11 +741,25 @@ on log records).
 If neither "streams" nor "stream" are specified, the default is a stream of
 type "stream" emitting to `process.stdout` at the "info" level.
 
+## Adding a Stream
+
+After a bunyan instance has been initialized, you may add additional streams by
+calling the `addStream` function.
+
+```js
+var bunyan = require('bunyan');
+var log = bunyan.createLogger('myLogger');
+log.addStream({
+  name: "myNewStream",
+  stream: process.stderr,
+  level: "debug"
+});
+```
 
 ## stream errors
 
 A Bunyan logger instance can be made to re-emit "error" events from its
-streams. Bunyan does so by defualt for [`type === "file"`
+streams. Bunyan does so by default for [`type === "file"`
 streams](#stream-type-file), so you can do this:
 
 ```js
@@ -1001,24 +1103,8 @@ This example emits:
 
 ## third-party streams
 
-(There are a lot that aren't listed here. `npm search bunyan` is a good
-place to start.)
-
-- syslog:
-  [mcavage/node-bunyan-syslog](https://github.com/mcavage/node-bunyan-syslog)
-  provides support for directing bunyan logging to a syslog server.
-
-- bunyan-slack:
-[qualitybath/bunyan-slack](https://github.com/qualitybath/bunyan-slack) Bunyan stream for Slack chat integration.
-
-- bunyan-fogbugz
-[qualitybath/bunyan-fogbugz](https://github.com/qualitybath/bunyan-fogbugz) Bunyan stream for sending automated crash reports to FogBugz
-
-- bunyan-cloudwatch:
-[mirkokiefer/bunyan-cloudwatch](https://github.com/mirkokiefer/bunyan-cloudwatch) Bunyan stream for sending logs to AWS CloudWatch.
-
-- TODO: eventually https://github.com/trentm/node-bunyan-winston
-
+See the [user-maintained list in the Bunyan
+wiki](https://github.com/trentm/node-bunyan/wiki/Awesome-Bunyan).
 
 
 # Runtime log snooping via DTrace
@@ -1149,6 +1235,7 @@ Node-bunyan supports running in a few runtime environments:
 - [Node.js](https://nodejs.org/)
 - [Browserify](http://browserify.org/): See the
   [Browserify section](#browserify) below.
+- [Webpack](https://webpack.github.io/): See the [Webpack section](#webpack) below.
 - [NW.js](http://nwjs.io/)
 
 Support for other runtime environments is welcome. If you have suggestions,
@@ -1256,6 +1343,29 @@ var log = bunyan.createLogger({
 log.info('hi on info');
 ```
 
+## Webpack
+Webpack can work with the same example Browserify above. To do this, we need to make webpack ignore optional files:
+Create "empty_shim.js":
+```javascript
+// This is an empty shim for things that should be not be included in webpack
+```
+Now tell webpack to use this file for
+[optional dependencies](https://webpack.github.io/docs/configuration.html#resolve-alias)
+in your "webpack.config.js":
+```
+resolve: {
+    // These shims are needed for bunyan
+    alias: {
+        'dtrace-provider': '/path/to/shim/empty_shim.js',
+        fs: '/path/to/shim/empty_shim.js',
+        'safe-json-stringify': '/path/to/shim/empty_shim.js',
+        mv: '/path/to/shim/empty_shim.js',
+        'source-map-support': '/path/to/shim/empty_shim.js'
+    }
+}
+```
+Now webpack builds, ignoring these optional dependencies via shimming in an empty JS file!
+
 # Versioning
 
 All versions are `<major>.<minor>.<patch>` which will be incremented for
@@ -1269,13 +1379,5 @@ versioning](http://semver.org/).
 
 # See Also
 
-- Bunyan syslog support: <https://github.com/mcavage/node-bunyan-syslog>.
-- Bunyan + Graylog2: <https://github.com/mhart/gelf-stream>.
-- Bunyan middleware for Express: <https://github.com/villadora/express-bunyan-logger>
-- An example of a Bunyan shim to the Winston logging system:
-  <https://github.com/trentm/node-bunyan-winston>. Also a [comparison of
-  Winston and Bunyan](http://strongloop.com/strongblog/compare-node-js-logging-winston-bunyan/).
-- [Bunyan for Bash](https://github.com/trevoro/bash-bunyan).
-- TODO: `RequestCaptureStream` example from restify.
-- [Bunyan integration for https://logentries.com](https://www.npmjs.org/package/logentries-stream)
-- [Bunyan integration for Kafka](https://github.com/yunong/bunyan-kafka)
+See the [user-maintained list of Bunyan-related software in the Bunyan
+wiki](https://github.com/trentm/node-bunyan/wiki/Awesome-Bunyan).

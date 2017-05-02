@@ -56,7 +56,9 @@ module.exports = function(ctx) {
 
   Post.virtual('permalink').get(function() {
     var url_for = ctx.extend.helper.get('url_for');
-    return ctx.config.url + url_for.call(ctx, this.path);
+    var config = ctx.config;
+    var partial_url = url_for.call(ctx, this.path);
+    return config.url + _.replace(partial_url, config.root, '/');
   });
 
   Post.virtual('full_source').get(function() {
