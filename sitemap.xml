@@ -2,9 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://cankingapp.github.io/2017/05/02/factory-design-pattern/</loc>
+    <loc>http://cankingapp.github.io/2017/05/03/factory-design-pattern/</loc>
     
-    <lastmod>2017-05-02T12:35:44.000Z</lastmod>
+    <lastmod>2017-05-02T12:36:56.000Z</lastmod>
     
   </url>
   
@@ -23,7 +23,7 @@
   </url>
   
   <url>
-    <loc>http://cankingapp.github.io/about/index.html</loc>
+    <loc>http://cankingapp.github.io/2016/03/30/ffmpeg/</loc>
     
     <lastmod>2017-04-28T06:11:02.000Z</lastmod>
     
@@ -37,6 +37,13 @@
   </url>
   
   <url>
+    <loc>http://cankingapp.github.io/2016/03/30/android-theme/</loc>
+    
+    <lastmod>2017-04-28T06:11:02.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://cankingapp.github.io/2016/03/18/android-permission/</loc>
     
     <lastmod>2017-04-28T06:11:02.000Z</lastmod>
@@ -44,7 +51,7 @@
   </url>
   
   <url>
-    <loc>http://cankingapp.github.io/2016/03/30/android-theme/</loc>
+    <loc>http://cankingapp.github.io/2016/03/22/apk-backup/</loc>
     
     <lastmod>2017-04-28T06:11:02.000Z</lastmod>
     
@@ -65,20 +72,6 @@
   </url>
   
   <url>
-    <loc>http://cankingapp.github.io/2016/03/30/ffmpeg/</loc>
-    
-    <lastmod>2017-04-28T06:11:02.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://cankingapp.github.io/2016/03/17/hello-world/</loc>
-    
-    <lastmod>2017-04-28T06:11:02.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://cankingapp.github.io/2016/11/08/git-log/</loc>
     
     <lastmod>2017-04-28T06:11:02.000Z</lastmod>
@@ -86,7 +79,7 @@
   </url>
   
   <url>
-    <loc>http://cankingapp.github.io/2016/03/18/notification-mgr/</loc>
+    <loc>http://cankingapp.github.io/2016/03/17/hello-world/</loc>
     
     <lastmod>2017-04-28T06:11:02.000Z</lastmod>
     
@@ -107,7 +100,14 @@
   </url>
   
   <url>
-    <loc>http://cankingapp.github.io/2016/03/22/apk-backup/</loc>
+    <loc>http://cankingapp.github.io/2016/03/18/notification-mgr/</loc>
+    
+    <lastmod>2017-04-28T06:11:02.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://cankingapp.github.io/about/index.html</loc>
     
     <lastmod>2017-04-28T06:11:02.000Z</lastmod>
     
