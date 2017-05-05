@@ -2,16 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://cankingapp.github.io/2017/05/02/JobQueue/</loc>
+    <loc>http://cankingapp.github.io/2017/05/06/classloader/</loc>
     
-    <lastmod>2017-05-05T10:18:01.000Z</lastmod>
+    <lastmod>2017-05-05T10:38:41.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://cankingapp.github.io/2017/05/06/classloader/</loc>
+    <loc>http://cankingapp.github.io/2017/05/02/JobQueue/</loc>
     
-    <lastmod>2017-05-05T10:16:08.000Z</lastmod>
+    <lastmod>2017-05-05T10:18:01.000Z</lastmod>
     
   </url>
   
@@ -37,7 +37,7 @@
   </url>
   
   <url>
-    <loc>http://cankingapp.github.io/2016/03/30/ffmpeg/</loc>
+    <loc>http://cankingapp.github.io/2016/03/18/android-permission/</loc>
     
     <lastmod>2017-04-28T06:11:02.000Z</lastmod>
     
@@ -51,13 +51,6 @@
   </url>
   
   <url>
-    <loc>http://cankingapp.github.io/2016/03/22/apk-backup/</loc>
-    
-    <lastmod>2017-04-28T06:11:02.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://cankingapp.github.io/2016/03/18/Hexo-blog/</loc>
     
     <lastmod>2017-04-28T06:11:02.000Z</lastmod>
@@ -65,7 +58,14 @@
   </url>
   
   <url>
-    <loc>http://cankingapp.github.io/2016/03/18/android-permission/</loc>
+    <loc>http://cankingapp.github.io/2015/06/18/2016-03-18-01/</loc>
+    
+    <lastmod>2017-04-28T06:11:02.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://cankingapp.github.io/2016/03/30/ffmpeg/</loc>
     
     <lastmod>2017-04-28T06:11:02.000Z</lastmod>
     
@@ -79,14 +79,14 @@
   </url>
   
   <url>
-    <loc>http://cankingapp.github.io/2016/03/17/hello-world/</loc>
+    <loc>http://cankingapp.github.io/2016/11/08/git-log/</loc>
     
     <lastmod>2017-04-28T06:11:02.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://cankingapp.github.io/2016/11/08/git-log/</loc>
+    <loc>http://cankingapp.github.io/2016/03/17/hello-world/</loc>
     
     <lastmod>2017-04-28T06:11:02.000Z</lastmod>
     
@@ -100,13 +100,6 @@
   </url>
   
   <url>
-    <loc>http://cankingapp.github.io/2016/03/18/python/</loc>
-    
-    <lastmod>2017-04-28T06:11:02.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://cankingapp.github.io/2016/04/08/npm-update-errer/</loc>
     
     <lastmod>2017-04-28T06:11:02.000Z</lastmod>
@@ -114,7 +107,14 @@
   </url>
   
   <url>
-    <loc>http://cankingapp.github.io/2015/06/18/2016-03-18-01/</loc>
+    <loc>http://cankingapp.github.io/2016/03/18/python/</loc>
+    
+    <lastmod>2017-04-28T06:11:02.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://cankingapp.github.io/2016/03/22/apk-backup/</loc>
     
     <lastmod>2017-04-28T06:11:02.000Z</lastmod>
     
