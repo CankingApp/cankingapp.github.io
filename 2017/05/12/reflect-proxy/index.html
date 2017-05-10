@@ -30,29 +30,191 @@
 <h4 id="4-获取类属性"><a href="#4-获取类属性" class="headerlink" title="4.获取类属性"></a>4.获取类属性</h4><figure class="highlight gauss"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">Field[] fields = test.getDeclaredFields();<span class="comment">//本类属性</span></div><div class="line">      <span class="keyword">for</span> (Field f : fields) &#123;</div><div class="line">          int modifier = f.getModifiers();<span class="comment">//修饰符</span></div><div class="line">          <span class="keyword">String</span> modiStr = Modifier.toString(modifier);</div><div class="line"></div><div class="line">          Class <span class="built_in">type</span> = f.getType();</div><div class="line">          <span class="keyword">System</span>.out.println(f.<span class="built_in">getName</span>() + <span class="string">" || modifier:"</span> + modiStr + <span class="string">" type:"</span> + <span class="built_in">type</span>.<span class="built_in">getName</span>());</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">System</span>.out.println(<span class="string">"\n"</span>);</div><div class="line"></div><div class="line">      Field[] fieldsAll = test.getFields();<span class="comment">//接口中属性</span></div><div class="line">      <span class="keyword">for</span> (Field f : fieldsAll) &#123;</div><div class="line">          int modifier = f.getModifiers();<span class="comment">//修饰符</span></div><div class="line">          <span class="keyword">String</span> modiStr = Modifier.toString(modifier);</div><div class="line"></div><div class="line">          Class <span class="built_in">type</span> = f.getType();</div><div class="line">          <span class="keyword">System</span>.out.println(f.<span class="built_in">getName</span>() + <span class="string">" || modifier:"</span> + modiStr + <span class="string">" type:"</span> + <span class="built_in">type</span>.<span class="built_in">getName</span>());</div><div class="line">      &#125;</div></pre></td></tr></table></figure>
 <p>想要获取父类中属性怎么办？getSuperclass()先获取父类实例，然后调用getDeclaredFields（）获取。可以依次遍历super类，获得全部继承关系中的属性。</p>
 <h4 id="5-获取类方法"><a href="#5-获取类方法" class="headerlink" title="5.获取类方法"></a>5.获取类方法</h4><figure class="highlight oxygene"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">Method</span> <span class="title">method</span>[] = <span class="title">test</span>.<span class="title">getMethods</span><span class="params">()</span>;</span> <span class="comment">//获取类及继承关系中的所有类方法</span></div><div class="line">      <span class="keyword">for</span>(<span class="function"><span class="keyword">Method</span> <span class="title">m</span> :</span> <span class="function"><span class="keyword">method</span>)<span class="comment">&#123;</span></span></div><div class="line">          Class&lt;?&gt; returnType = m.getReturnType();</div><div class="line">          Class&lt;?&gt; para[] = m.getParameterTypes();</div><div class="line">          int temp = m.getModifiers();</div><div class="line"></div><div class="line">          System.out.println(m.getName()+" returnType:"+returnType+" modifiers:"+Modifier.toString(temp));</div><div class="line">          for(Class c : para)&#123;</div><div class="line">              System.out.println(" c name:"+c.getName());</div><div class="line">          &#125;</div><div class="line">      &#125;</div></pre></td></tr></table></figure>
-<h4 id="6-方法及属性的操作"><a href="#6-方法及属性的操作" class="headerlink" title="6.方法及属性的操作"></a>6.方法及属性的操作</h4><pre><code>try {
-       Method ms = test.getMethod(&quot;setName&quot;, String.class);
-       Method mg = test.getMethod(&quot;getName&quot;);
-       Object obj = test.newInstance();
-       ms.invoke(obj, &quot;New name&quot;);
-       System.out.println(&quot;name:&quot; + mg.invoke(obj));
-
-       Field canking = test.getDeclaredField(&quot;name&quot;);
-       canking.setAccessible(true);//禁用权限检测
-       canking.set(obj, &quot;Name Modified!&quot;);
-       System.out.println(&quot;name:&quot; + canking.get(obj));
-   } catch (Exception e) {
-       e.printStackTrace();
-   }
-</code></pre><h2 id="二、代理"><a href="#二、代理" class="headerlink" title="二、代理"></a>二、代理</h2><h3 id="什么是java代理模式？"><a href="#什么是java代理模式？" class="headerlink" title="什么是java代理模式？"></a>什么是java代理模式？</h3><p>代理用到类反射的知识，这里进一步单独讲解加深理解。</p>
+<h4 id="6-方法及属性的操作"><a href="#6-方法及属性的操作" class="headerlink" title="6.方法及属性的操作"></a>6.方法及属性的操作</h4><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">try &#123;</div><div class="line">       Method ms = test.getMethod(<span class="string">"setName"</span>, String.class)<span class="comment">;</span></div><div class="line">       Method mg = test.getMethod(<span class="string">"getName"</span>)<span class="comment">;</span></div><div class="line">       Object obj = test.newInstance()<span class="comment">;</span></div><div class="line">       ms.invoke(obj, <span class="string">"New name"</span>)<span class="comment">;</span></div><div class="line">       System.out.println(<span class="string">"name:"</span> + mg.invoke(obj))<span class="comment">;</span></div><div class="line"></div><div class="line">       Field canking = test.getDeclaredField(<span class="string">"name"</span>)<span class="comment">;</span></div><div class="line">       canking.setAccessible(true)<span class="comment">;//禁用权限检测</span></div><div class="line">       canking<span class="meta">.set</span>(obj, <span class="string">"Name Modified!"</span>)<span class="comment">;</span></div><div class="line">       System.out.println(<span class="string">"name:"</span> + canking.get(obj))<span class="comment">;</span></div><div class="line">   &#125; catch (Exception e) &#123;</div><div class="line">       e.printStackTrace()<span class="comment">;</span></div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<h2 id="二、代理"><a href="#二、代理" class="headerlink" title="二、代理"></a>二、代理</h2><h3 id="什么是java代理模式？"><a href="#什么是java代理模式？" class="headerlink" title="什么是java代理模式？"></a>什么是java代理模式？</h3><p>代理用到类反射的知识，这里进一步单独讲解加深理解。</p>
 <p>对某个对象提供一个代理对象，使得我们可以通过代理对象间接的操作原对象。</p>
 <blockquote>
-<p>静态代理：代码层通过设计类获得一个中间层代理，是在编译时已经实现好的，可以说是一个class文件。<br>  动态代理：代理类是在运行时由java机理产生。起到动态调用和操作代码的目的。</p>
+<p><strong>静态代理</strong>：代码层通过设计类获得一个中间层代理，是在编译时已经实现好的，可以说是一个class文件。<br>  <strong>动态代理</strong>：代理类是在运行时由java机理产生。起到动态调用和操作代码的目的。</p>
 </blockquote>
-</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://cankingapp.github.io/2017/05/12/reflect-proxy/" data-id="cj2ig3er6000f1e3kd9tjfdgu" class="article-share-link">分享到</a><div class="tags"><a href="/tags/Plugin/">Plugin</a></div><div class="post-nav"><a href="/2017/05/06/classloader/" class="pre">知识总结之 插件化基础ClassLoader</a><a href="/2017/05/13/symbolic-link/" class="next">Linux系统中硬链接与软链接</a></div><div class="post-donate"><div id="donate_board" class="donate_bar center"><a id="btn_donate" href="javascript:;" title="打赏" class="btn_donate"></a><span class="donate_txt"><br>		   Enjoy it ? Donate me :  免费分享，共同成长</span><br></div><div id="donate_guide" class="donate_bar center hidden"><a id="donate_weixin" href="{{ url_for(theme.images) }}/weixin.jpg" rel="article0" class="fancybox"><img src="{{ url_for(theme.images) }}/weixin.jpg" fuck="微信打赏"></a><a id="donate_zhifubao" href="{{ url_for(theme.images) }}/zhifubao.jpg" rel="article0" class="fancybox"><img src="{{ url_for(theme.images) }}/zhifubao.jpg" fuck="支付宝打赏"></a></div><script type="text/javascript">document.getElementById('btn_donate').onclick = function(){
+<p>由于静态代理比较简单，易于理解，本文主要讲解动态代理。</p>
+<h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p><strong>InvocationHandler接口</strong><br>代理类调用任何方法都会经过这个调用处理器类的invoke方法。</p>
+<p><strong>Proxy</strong><br>主要用于产生代理类，通过 Proxy 类生成的代理类都继承了 Proxy 类。newProxyInstance方法封装了获取代理对象。</p>
+<figure class="highlight plain"><figcaption><span>loader, Class<?>[] interfaces, InvocationHandler h);```方法传如的参数可以看出，代理一个对象，必须要要满足这个对象实现一个接口。</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">### 动态代理实现方法</div><div class="line"></div><div class="line">个人学习习惯，学习新知识，先了解大概，然后就是代码，最后看原理，有精力的话就写点东西分享出来。这里就先看下代码如何实现一个动态代理。</div><div class="line"></div><div class="line">只要一个类满足代理条件，即可实现代理。</div></pre></td></tr></table></figure>
+<p> public class CankingProxyHandler implements InvocationHandler {<br>    private Object object;<br>    public CankingProxyHandler(Object obj){<br>        this.object= obj;<br>    }<br>    @Override<br>    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {<br>        System.out.println(“Proxy method in”);<br>        if (“setName”.equals(method.getName())) {<br>            return method.invoke(object, “Proxy”);<br>        }<br>        return method.invoke(object, args);<br>    }<br> }<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure></p>
+<pre><code>CankingProxyHandler proxyHandler = new CankingProxyHandler(bean1);
+ICanking cProxy = (ICanking) Proxy.newProxyInstance(CankingBean.class.getClassLoader(), CankingBean.class.getInterfaces(), proxyHandler);
+cProxy.createApp();
+</code></pre><figure class="highlight clean"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">代理类的每次方法调用，都会触发proxyHandler的invoke方法，这样我们就可以在此时做一些自己的事情。</div><div class="line"></div><div class="line">android系统中有些类也是满足代理条件的，这样我们同样可以做一个代理类，来实现hook系统部分方法的目的。</div><div class="line"></div><div class="line"></div><div class="line">### 实现原理</div><div class="line"></div><div class="line">首先来看下newProxyInstance源码</div></pre></td></tr></table></figure>
+<pre><code>@CallerSensitive
+public static Object newProxyInstance(ClassLoader loader,
+                                      Class&lt;?&gt;[] interfaces,
+                                      InvocationHandler h)
+    throws IllegalArgumentException
+{
+    Objects.requireNonNull(h);
+
+    final Class&lt;?&gt;[] intfs = interfaces.clone();
+    final SecurityManager sm = System.getSecurityManager();
+    if (sm != null) {
+        checkProxyAccess(Reflection.getCallerClass(), loader, intfs);
+    }
+
+    /*
+     * Look up or generate the designated proxy class.
+     */
+    Class&lt;?&gt; cl = getProxyClass0(loader, intfs); //代理类生成关键方法
+
+    /*
+     * Invoke its constructor with the designated invocation handler.
+     */
+    try {
+        if (sm != null) {
+            checkNewProxyPermission(Reflection.getCallerClass(), cl);
+        }
+
+        final Constructor&lt;?&gt; cons = cl.getConstructor(constructorParams);
+        final InvocationHandler ih = h;
+        if (!Modifier.isPublic(cl.getModifiers())) {
+            AccessController.doPrivileged(new PrivilegedAction&lt;Void&gt;() {
+                public Void run() {
+                    cons.setAccessible(true);
+                    return null;
+                }
+            });
+        }
+        return cons.newInstance(new Object[]{h});
+    } catch (IllegalAccessException|InstantiationException e) {
+        throw new InternalError(e.toString(), e);
+    } catch (InvocationTargetException e) {
+        Throwable t = e.getCause();
+        if (t instanceof RuntimeException) {
+            throw (RuntimeException) t;
+        } else {
+            throw new InternalError(t.toString(), t);
+        }
+    } catch (NoSuchMethodException e) {
+        throw new InternalError(e.toString(), e);
+    }
+}
+</code></pre><figure class="highlight gcode"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">可以看出getProxyClass<span class="number">0</span><span class="comment">()</span>方法为生成代理类关键方法</div></pre></td></tr></table></figure>
+<pre><code>/**
+ * Generate a proxy class.  Must call the checkProxyAccess method
+ * to perform permission checks before calling this.
+ */
+private static Class&lt;?&gt; getProxyClass0(ClassLoader loader,
+                                       Class&lt;?&gt;... interfaces) {
+    if (interfaces.length &gt; 65535) {
+        throw new IllegalArgumentException(&quot;interface limit exceeded&quot;);
+    }
+
+    // If the proxy class defined by the given loader implementing
+    // the given interfaces exists, this will simply return the cached copy;
+    // otherwise, it will create the proxy class via the ProxyClassFactory
+    return proxyClassCache.get(loader, interfaces);
+}
+</code></pre><figure class="highlight applescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">看到源码注释，如果代理类在传入的classloader中已经加载则直接返回，否则会在ProxyClassFactory中生成。</div><div class="line"></div><div class="line">proxyClassCache.<span class="keyword">get</span>方法中有以下代码</div></pre></td></tr></table></figure>
+<pre><code>// create subKey and retrieve the possible Supplier&lt;V&gt; stored by that
+// subKey from valuesMap
+Object subKey = Objects.requireNonNull(subKeyFactory.apply(key, parameter));
+Supplier&lt;V&gt; supplier = valuesMap.get(subKey);
+</code></pre><figure class="highlight clean"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">结合代码和注释可以大概看出```subKeyFactory.apply(key, parameter)```返回的就是代理类</div><div class="line"></div><div class="line"></div><div class="line">那我们具体看看apply是怎么生产我们的代理类的：</div></pre></td></tr></table></figure>
+<pre><code>@Override
+public Class&lt;?&gt; apply(ClassLoader loader, Class&lt;?&gt;[] interfaces) {
+
+    Map&lt;Class&lt;?&gt;, Boolean&gt; interfaceSet = new IdentityHashMap&lt;&gt;(interfaces.length);
+    for (Class&lt;?&gt; intf : interfaces) {
+        /*
+         * Verify that the class loader resolves the name of this
+         * interface to the same Class object.
+         */
+        Class&lt;?&gt; interfaceClass = null;
+        try {
+            interfaceClass = Class.forName(intf.getName(), false, loader);//加载原始接口
+        } catch (ClassNotFoundException e) {
+        }
+        if (interfaceClass != intf) {
+            throw new IllegalArgumentException(
+                intf + &quot; is not visible from class loader&quot;);
+        }
+        /*
+         * Verify that the Class object actually represents an
+         * interface.
+         */
+        if (!interfaceClass.isInterface()) {
+            throw new IllegalArgumentException(
+                interfaceClass.getName() + &quot; is not an interface&quot;);
+        }
+        /*
+         * Verify that this interface is not a duplicate.
+         */
+        if (interfaceSet.put(interfaceClass, Boolean.TRUE) != null) {
+            throw new IllegalArgumentException(
+                &quot;repeated interface: &quot; + interfaceClass.getName());
+        }
+    }
+
+    String proxyPkg = null;     // package to define proxy class in
+    int accessFlags = Modifier.PUBLIC | Modifier.FINAL;
+
+    /*
+     * Record the package of a non-public proxy interface so that the
+     * proxy class will be defined in the same package.  Verify that
+     * all non-public proxy interfaces are in the same package.
+     */
+    for (Class&lt;?&gt; intf : interfaces) {//解析原始接口
+        int flags = intf.getModifiers();
+        if (!Modifier.isPublic(flags)) {
+            accessFlags = Modifier.FINAL;
+            String name = intf.getName();
+            int n = name.lastIndexOf(&apos;.&apos;);
+            String pkg = ((n == -1) ? &quot;&quot; : name.substring(0, n + 1));
+            if (proxyPkg == null) {
+                proxyPkg = pkg;
+            } else if (!pkg.equals(proxyPkg)) {
+                throw new IllegalArgumentException(
+                    &quot;non-public interfaces from different packages&quot;);
+            }
+        }
+    }
+
+    if (proxyPkg == null) {
+        // if no non-public proxy interfaces, use com.sun.proxy package
+        proxyPkg = ReflectUtil.PROXY_PACKAGE + &quot;.&quot;;
+    }
+
+    /*
+     * Choose a name for the proxy class to generate.
+     */
+    long num = nextUniqueNumber.getAndIncrement();
+    String proxyName = proxyPkg + proxyClassNamePrefix + num;//构造代理类名
+
+    /*
+     * Generate the specified proxy class.
+     */
+    byte[] proxyClassFile = ProxyGenerator.generateProxyClass(
+        proxyName, interfaces, accessFlags);//生产代理类
+    try {
+        return defineClass0(loader, proxyName,
+                            proxyClassFile, 0, proxyClassFile.length);
+    } catch (ClassFormatError e) {
+        /*
+         * A ClassFormatError here means that (barring bugs in the
+         * proxy class generation code) there was some other
+         * invalid aspect of the arguments supplied to the proxy
+         * class creation (such as virtual machine limitations
+         * exceeded).
+         */
+        throw new IllegalArgumentException(e.toString());
+    }
+}
+</code></pre><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">最终ProxyGenerator.generateProxyClass方法中产生类代理类并写入磁盘。这种操作代码的代码java总称为*<span class="strong">*元编程*</span><span class="strong">*，java SOURCE级别的注解中也会大量用到。</span></div><div class="line"></div><div class="line">代理类最终生产的样子如下：</div></pre></td></tr></table></figure>
+<p>public final class $Proxy1 extends Proxy implements Subject{<br>    private InvocationHandler h;<br>    private $Proxy1(){}<br>    public $Proxy1(InvocationHandler h){<br>        this.h = h;<br>    }<br>    public int request(int i){<br>        Method method = Subject.class.getMethod(“method”, new Class[]{int.class});    //创建method对象<br>        return (Integer)h.invoke(this, method, new Object[]{new Integer(i)}); //调用了invoke方法<br>    }<br>}<br>```</p>
+<p>从代理来结构，可以看出为什么每次方法的调用都会掉到invocationHandler的invoke方法。</p>
+<p>——————<br>欢迎转载，请标明出处：常兴E站 <a href="http://www.canking.win" target="_blank" rel="external">www.canking.win</a></p>
+</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://cankingapp.github.io/2017/05/12/reflect-proxy/" data-id="cj2iuu2yk000kxr3knnvj9o6o" class="article-share-link">分享到</a><div class="tags"><a href="/tags/Plugin/">Plugin</a></div><div class="post-nav"><a href="/2017/05/06/classloader/" class="pre">知识总结之 插件化基础ClassLoader</a><a href="/2017/05/13/symbolic-link/" class="next">Linux系统中硬链接与软链接</a></div><div class="post-donate"><div id="donate_board" class="donate_bar center"><a id="btn_donate" href="javascript:;" title="打赏" class="btn_donate"></a><span class="donate_txt"><br>		   Enjoy it ? Donate me :  免费分享，共同成长</span><br></div><div id="donate_guide" class="donate_bar center hidden"><a id="donate_weixin" href="{{ url_for(theme.images) }}/weixin.jpg" rel="article0" class="fancybox"><img src="{{ url_for(theme.images) }}/weixin.jpg" fuck="微信打赏"></a><a id="donate_zhifubao" href="{{ url_for(theme.images) }}/zhifubao.jpg" rel="article0" class="fancybox"><img src="{{ url_for(theme.images) }}/zhifubao.jpg" fuck="支付宝打赏"></a></div><script type="text/javascript">document.getElementById('btn_donate').onclick = function(){
 $('#donate_board').addClass('hidden');
 $('#donate_guide').removeClass('hidden');
-}</script></div><div data-thread-key="2017/05/12/reflect-proxy/" data-title="知识总结之 插件化基础 java反射与代理" data-url="http://cankingapp.github.io/2017/05/12/reflect-proxy/" class="ds-share flat"><div class="ds-share-inline"><ul class="ds-share-icons-16"><li data-toggle="ds-share-icons-more"><a href="javascript:void(0);" class="ds-more">分享到：</a></li><li><a href="javascript:void(0);" data-service="weibo" class="ds-weibo">微博</a></li><li><a href="javascript:void(0);" data-service="qzone" class="ds-qzone">QQ空间</a></li><li><a href="javascript:void(0);" data-service="qqt" class="ds-qqt">腾讯微博</a></li><li><a href="javascript:void(0);" data-service="wechat" class="ds-wechat">微信</a></li></ul><div class="ds-share-icons-more"></div></div></div><div data-thread-key="2017/05/12/reflect-proxy/" data-title="知识总结之 插件化基础 java反射与代理" data-url="http://cankingapp.github.io/2017/05/12/reflect-proxy/" data-author-key="1" class="ds-thread"></div></div></div></div><div class="pure-u-1-4"><div id="sidebar"><div class="widget"><form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="search" name="word" maxlength="20" placeholder="Search"/><input type="hidden" name="si" value="http://cankingapp.github.io"/><input name="tn" type="hidden" value="bds"/><input name="cl" type="hidden" value="3"/><input name="ct" type="hidden" value="2097152"/><input name="s" type="hidden" value="on"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/android/">android</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/design-patterns/">design patterns</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/node/">node</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/tool/">tool</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/源码/" style="font-size: 15px;">源码</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/JobQueue/" style="font-size: 15px;">JobQueue</a> <a href="/tags/float-permission/" style="font-size: 15px;">float permission</a> <a href="/tags/theme/" style="font-size: 15px;">theme</a> <a href="/tags/android/" style="font-size: 15px;">android</a> <a href="/tags/smart-update/" style="font-size: 15px;">smart update</a> <a href="/tags/Plugin/" style="font-size: 15px;">Plugin</a> <a href="/tags/ffmpeg/" style="font-size: 15px;">ffmpeg</a> <a href="/tags/git/" style="font-size: 15px;">git</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/node/" style="font-size: 15px;">node</a> <a href="/tags/python/" style="font-size: 15px;">python</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/05/13/symbolic-link/">Linux系统中硬链接与软链接</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/12/reflect-proxy/">知识总结之 插件化基础 java反射与代理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/classloader/">知识总结之 插件化基础ClassLoader</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/03/factory-design-pattern/">知识总结之 工厂模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/02/JobQueue/">知识总结之 JobQueue 源码解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/27/AsyncTask/">知识总结之 AsyncTask 源码解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/08/git-log/">git log命令展示过滤技巧</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/02/access-float/">辅助功能 之 小米手机悬浮窗权限</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/08/npm-update-errer/">Node 升级工具n 大坑</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/30/android-theme/">Android Theme-安卓样式换肤实践方案</a></li></ul></div><div class="widget"><div class="comments-title"><i class="fa fa-comment-o"> 最近评论</i></div><div data-num-items="5" data-show-avatars="0" data-show-time="1" data-show-admin="0" data-excerpt-length="32" data-show-title="1" class="ds-recent-comments"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://cankingapp.github.io/fitness/" title="健美计步器" target="_blank">健美计步器</a><ul></ul><a href="http://zhushou.360.cn/detail/index/soft_id/260762" title="充电助手" target="_blank">充电助手</a><ul></ul><a href="http://sudoku.strikingly.com/" title="爱我数独" target="_blank">爱我数独</a><ul></ul><a href="http://stopwatch.strikingly.com/" title="精确秒表" target="_blank">精确秒表</a><ul></ul><a href="http://www.wandoujia.com/apps/net.canking.gameby" title="色 变" target="_blank">色 变</a><ul></ul><a href="http://canking.strikingly.com/" title="自我简介" target="_blank">自我简介</a><ul></ul><a href="http://cankingapp.github.io/fitness/h5game/index.html" title="H5 Game" target="_blank">H5 Game</a></div><iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&;fansRow=2&amp;ptype=1&amp;speed=0&amp;skin=1&amp;isTitle=1&amp;noborder=0&isWeibo=1&isFans=1&uid=1894127781&verifier=b6b87527&amp;dpc=1"></iframe></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">常兴 E 站.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> changxing</a> by<a rel="nofollow" target="_blank" href="https://github.com/CankingApp/"> Github.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script>var duoshuoQuery = {short_name:'cankingapp'};
+}</script></div><div data-thread-key="2017/05/12/reflect-proxy/" data-title="知识总结之 插件化基础 java反射与代理" data-url="http://cankingapp.github.io/2017/05/12/reflect-proxy/" class="ds-share flat"><div class="ds-share-inline"><ul class="ds-share-icons-16"><li data-toggle="ds-share-icons-more"><a href="javascript:void(0);" class="ds-more">分享到：</a></li><li><a href="javascript:void(0);" data-service="weibo" class="ds-weibo">微博</a></li><li><a href="javascript:void(0);" data-service="qzone" class="ds-qzone">QQ空间</a></li><li><a href="javascript:void(0);" data-service="qqt" class="ds-qqt">腾讯微博</a></li><li><a href="javascript:void(0);" data-service="wechat" class="ds-wechat">微信</a></li></ul><div class="ds-share-icons-more"></div></div></div><div data-thread-key="2017/05/12/reflect-proxy/" data-title="知识总结之 插件化基础 java反射与代理" data-url="http://cankingapp.github.io/2017/05/12/reflect-proxy/" data-author-key="1" class="ds-thread"></div></div></div></div><div class="pure-u-1-4"><div id="sidebar"><div class="widget"><form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="search" name="word" maxlength="20" placeholder="Search"/><input type="hidden" name="si" value="http://cankingapp.github.io"/><input name="tn" type="hidden" value="bds"/><input name="cl" type="hidden" value="3"/><input name="ct" type="hidden" value="2097152"/><input name="s" type="hidden" value="on"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/android/">android</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/design-patterns/">design patterns</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/node/">node</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/tool/">tool</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/smart-update/" style="font-size: 15px;">smart update</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/JobQueue/" style="font-size: 15px;">JobQueue</a> <a href="/tags/float-permission/" style="font-size: 15px;">float permission</a> <a href="/tags/android/" style="font-size: 15px;">android</a> <a href="/tags/theme/" style="font-size: 15px;">theme</a> <a href="/tags/源码/" style="font-size: 15px;">源码</a> <a href="/tags/Plugin/" style="font-size: 15px;">Plugin</a> <a href="/tags/ffmpeg/" style="font-size: 15px;">ffmpeg</a> <a href="/tags/git/" style="font-size: 15px;">git</a> <a href="/tags/node/" style="font-size: 15px;">node</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/05/13/symbolic-link/">Linux系统中硬链接与软链接</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/12/reflect-proxy/">知识总结之 插件化基础 java反射与代理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/classloader/">知识总结之 插件化基础ClassLoader</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/03/factory-design-pattern/">知识总结之 工厂模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/02/JobQueue/">知识总结之 JobQueue 源码解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/27/AsyncTask/">知识总结之 AsyncTask 源码解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/08/git-log/">git log命令展示过滤技巧</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/02/access-float/">辅助功能 之 小米手机悬浮窗权限</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/08/npm-update-errer/">Node 升级工具n 大坑</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/30/android-theme/">Android Theme-安卓样式换肤实践方案</a></li></ul></div><div class="widget"><div class="comments-title"><i class="fa fa-comment-o"> 最近评论</i></div><div data-num-items="5" data-show-avatars="0" data-show-time="1" data-show-admin="0" data-excerpt-length="32" data-show-title="1" class="ds-recent-comments"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://cankingapp.github.io/fitness/" title="健美计步器" target="_blank">健美计步器</a><ul></ul><a href="http://zhushou.360.cn/detail/index/soft_id/260762" title="充电助手" target="_blank">充电助手</a><ul></ul><a href="http://sudoku.strikingly.com/" title="爱我数独" target="_blank">爱我数独</a><ul></ul><a href="http://stopwatch.strikingly.com/" title="精确秒表" target="_blank">精确秒表</a><ul></ul><a href="http://www.wandoujia.com/apps/net.canking.gameby" title="色 变" target="_blank">色 变</a><ul></ul><a href="http://canking.strikingly.com/" title="自我简介" target="_blank">自我简介</a><ul></ul><a href="http://cankingapp.github.io/fitness/h5game/index.html" title="H5 Game" target="_blank">H5 Game</a></div><iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&;fansRow=2&amp;ptype=1&amp;speed=0&amp;skin=1&amp;isTitle=1&amp;noborder=0&isWeibo=1&isFans=1&uid=1894127781&verifier=b6b87527&amp;dpc=1"></iframe></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">常兴 E 站.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> changxing</a> by<a rel="nofollow" target="_blank" href="https://github.com/CankingApp/"> Github.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script>var duoshuoQuery = {short_name:'cankingapp'};
 (function() {
     var ds = document.createElement('script');
     ds.type = 'text/javascript';ds.async = true;
