@@ -58,5 +58,9 @@ links:
 js: js
 css: css
 
+#打赏
+donate: true
+donate_txt: "Enjoy it ? Donate me :  免费分享，共同成长"
+
 # Theme version
 version: 0.0.0

@@ -8,7 +8,7 @@ tags: JobQueue
 本文主要分析及调研开源项目android-priority-jobqueue的基本原理及知识点，目的为更加深入的了解安卓平台后台
 任务处理，及多线程调度的理解。
 
-![Just do it](http://pic.jj20.com/up/allimg/511/112111121256/111121121256-0.jpg)
+![Just do it](http://wx4.sinaimg.cn/mw690/70e618a5ly1fdzhtte5alj20zk0qoqa6.jpg)
 
 <!--more-->
 

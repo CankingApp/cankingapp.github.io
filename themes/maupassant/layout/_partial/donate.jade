@@ -1,0 +1,17 @@
+.post-donate
+  #donate_board.donate_bar.center
+    a#btn_donate.btn_donate(href='javascript:;', title='打赏')
+    span.donate_txt
+      br
+      | 		   #{ theme.donate_txt }
+    br
+  #donate_guide.donate_bar.center.hidden
+    a#donate_weixin.fancybox(href='{{ url_for(theme.images) }}/weixin.jpg', rel='article0')
+      img(src='{{ url_for(theme.images) }}/weixin.jpg', fuck='微信打赏')
+    a#donate_zhifubao.fancybox(href='{{ url_for(theme.images) }}/zhifubao.jpg', rel='article0')
+      img(src='{{ url_for(theme.images) }}/zhifubao.jpg', fuck='支付宝打赏')
+  script(type='text/javascript').
+    document.getElementById('btn_donate').onclick = function(){
+    $('#donate_board').addClass('hidden');
+    $('#donate_guide').removeClass('hidden');
+    }
