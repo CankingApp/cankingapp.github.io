@@ -40,9 +40,9 @@ widgets: ## Six widgets in sidebar provided: search, category, tag, recent_posts
 
 links:
   - title: 健美计步器
-    url: http://cankingapp.github.io/fitness/
+    url: http://www.canking.win/fitness
   - title: 充电助手
-    url: http://zhushou.360.cn/detail/index/soft_id/260762
+    url: http://www.canking.win/chargehelper
   - title: 爱我数独
     url: http://sudoku.strikingly.com/
   - title: 精确秒表
