@@ -1,6 +1,8 @@
 fancybox: true ## If you want to use fancybox please set the value to true.
-duoshuo: cankingapp ## Your duoshuo_shortname, e.g. username
+duoshuo: ## Your duoshuo_shortname, e.g. username
 disqus: ## Your disqus_shortname, e.g. username
+uyan: 2136494 ## Your uyan_id. e.g. 1234567
+gentie: ## Your gentie_productKey, e.g. fc799538c7ad4cf5a5a0c2877a90cbd7
 google_search: false ## Use Google search, true/false.
 baidu_search: true ## Use Baidu search, true/false.
 swiftype: ## Your swiftype_key, e.g. m7b11ZrsT8Me7gzApciT
@@ -8,9 +10,13 @@ tinysou: ## Your tinysou_key, e.g. 4ac092ad8d749fdc6293
 self_search: ## Use a jQuery-based local search engine, true/false.
 google_analytics: ## Your Google Analytics tracking id, e.g. UA-42425684-2
 baidu_analytics: ## Your Baidu Analytics tracking id, e.g. 8006843039519956000
+show_category_count: true
 cnzz_analytics: true ## tongji
 shareto: true ## If you want to use the share button please set the value to true.
 busuanzi:  ## If you want to use Busuanzi page views please set the value to true.
+widgets_on_small_screens: true ## Set to true to enable widgets on small screens.
+
+
 
 menu:
   - page: home
@@ -37,7 +43,7 @@ widgets: ## Six widgets in sidebar provided: search, category, tag, recent_posts
   - recent_comments
   - links
   - weibo
-
+  
 links:
   - title: 健美计步器
     url: http://www.canking.win/fitness
@@ -54,13 +60,23 @@ links:
   - title: H5 Game
     url: http://cankingapp.github.io/fitness/h5game/index.html
 
+timeline:
+  - num: 1
+    word: 2014/06/12-Start
+  - num: 2
+    word: 2014/11/29-XXX
+  - num: 3
+    word: 2015/02/18-DDD
+  - num: 4
+    word: More
+
 # Static files
 js: js
 css: css
 
 #打赏
 donate: true
-donate_txt: "Enjoy it ? Donate me :  免费分享，共同成长"
+donate_txt: 'Enjoy it ? Donate me :  免费分享，共同成长'
 
 # Theme version
 version: 0.0.0
