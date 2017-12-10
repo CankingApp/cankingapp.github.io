@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.canking.win/2017/12/09/mvvm/</loc>
+    
+    <lastmod>2017-12-10T04:35:00.054Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.canking.win/2017/11/19/gradle-android-res/</loc>
+    
+    <lastmod>2017-12-07T11:18:35.213Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.canking.win/about/index.html</loc>
     
     <lastmod>2017-12-01T02:48:35.553Z</lastmod>
@@ -12,13 +26,6 @@
     <loc>http://www.canking.win/2015/06/18/2016-03-18-01/</loc>
     
     <lastmod>2017-11-24T02:01:15.689Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.canking.win/2017/11/19/gradle-android-res/</loc>
-    
-    <lastmod>2017-11-23T02:15:13.701Z</lastmod>
     
   </url>
   
@@ -114,14 +121,7 @@
   </url>
   
   <url>
-    <loc>http://www.canking.win/2016/03/22/apk-backup/</loc>
-    
-    <lastmod>2017-04-28T06:11:02.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.canking.win/2016/03/17/hello-world/</loc>
+    <loc>http://www.canking.win/2016/03/18/android-permission/</loc>
     
     <lastmod>2017-04-28T06:11:02.000Z</lastmod>
     
@@ -156,6 +156,20 @@
   </url>
   
   <url>
+    <loc>http://www.canking.win/2016/06/02/access-float/</loc>
+    
+    <lastmod>2017-04-28T06:11:02.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.canking.win/2016/03/17/hello-world/</loc>
+    
+    <lastmod>2017-04-28T06:11:02.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.canking.win/2016/03/18/python/</loc>
     
     <lastmod>2017-04-28T06:11:02.000Z</lastmod>
@@ -163,7 +177,7 @@
   </url>
   
   <url>
-    <loc>http://www.canking.win/2016/03/18/android-permission/</loc>
+    <loc>http://www.canking.win/2016/03/22/apk-backup/</loc>
     
     <lastmod>2017-04-28T06:11:02.000Z</lastmod>
     
@@ -171,13 +185,6 @@
   
   <url>
     <loc>http://www.canking.win/2016/03/30/android-theme/</loc>
-    
-    <lastmod>2017-04-28T06:11:02.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.canking.win/2016/06/02/access-float/</loc>
     
     <lastmod>2017-04-28T06:11:02.000Z</lastmod>
     
