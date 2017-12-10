@@ -226,36 +226,17 @@ public abstract class LiveData<T> {
         removed.activeStateChanged(false);
     }
 
-    @MainThread
-    public void removeObservers(@NonNull final LifecycleOwner owner) {
-        assertMainThread("removeObservers");
-        for (Map.Entry<Observer<T>, LifecycleBoundObserver> entry : mObservers) {
-            if (entry.getValue().owner == owner) {
-                removeObserver(entry.getKey());
-            }
-        }
-    }
-
-	//实现类回调方法
+    //实现类回调方法
     protected void onActive() {
 
     }
 
-	//实现类回调方法
+    //实现类回调方法
     protected void onInactive() {
 
     }
 
     class LifecycleBoundObserver implements GenericLifecycleObserver {
-        public final LifecycleOwner owner;
-        public final Observer<T> observer;
-        public boolean active;
-        public int lastVersion = START_VERSION;
-
-        LifecycleBoundObserver(LifecycleOwner owner, Observer<T> observer) {
-            this.owner = owner;
-            this.observer = observer;
-        }
 
         @Override
         public void onStateChanged(LifecycleOwner source, Lifecycle.Event event) {
@@ -332,11 +313,189 @@ LiveData有两个实现类：*MediatorLiveData*和*MediatorLiveData*，继承关
     }
 ```
 
-#### ViewMode
+#### ViewModel
 
 LiveData和LiveCycle将数据与数据，数据与UI生命绑定到了一起，实现了数据的自动管理和更新，那边这些数据如何保存呢？能否在多个页面共享这些数据呢？答案是ViewMode。
 
 >A ViewModel is always created in association with a scope (an fragment or an activity) and will be retained as long as the scope is alive. E.g. if it is an Activity, until it is finished.
+
+ViewMode相当于一层数据隔离层，将UI层的数据逻辑全部抽离干净，管理制底层数据的获取方式和逻辑。
+
+
+```
+         ViewModel   viewModel = ViewModelProviders.of(this).get(xxxModel.class);
+         
+         ViewModel   viewModel = ViewModelProviders.of(this, factory).get(xxxModel.class);
+```
+
+可以通过以上方式获取ViewModel实例，如果有自定义ViewModel构造器参数，需要借助**ViewModelProvider.NewInstanceFactory**，自己实现create方法。
+
+那么，ViewMode是怎么被保存的呢？ 可以顺着ViewModelProviders源码进去看看。
+
+```
+    @NonNull
+    @MainThread
+    public <T extends ViewModel> T get(@NonNull String key, @NonNull Class<T> modelClass) {
+        ViewModel viewModel = mViewModelStore.get(key);
+
+        if (modelClass.isInstance(viewModel)) {
+            //noinspection unchecked
+            return (T) viewModel;
+        } else {
+            //noinspection StatementWithEmptyBody
+            if (viewModel != null) {
+                // TODO: log a warning.
+            }
+        }
+
+        viewModel = mFactory.create(modelClass);
+        mViewModelStore.put(key, viewModel);
+        //noinspection unchecked
+        return (T) viewModel;
+    }
+```
+
+发现get方法会先从缓存中获取，没有的化就会通过*Factory*的create方法构造一个ViewModel，然后放入缓存，下次直接使用。
+
+#### Room
+Room是一种ORM（对象关系映射）模式数据库框架，对安卓SQlite的抽象封装，从此操作数据库提供了超便捷方式。
+
+>The Room persistence library provides an abstraction layer over SQLite to allow fluent database access while harnessing the full power of SQLite.
+
+同样基于ORM模式封装的数据库，比较有名还有*GreenDao*，而Room和其他ORM对比，具有编译时验证查询语句正常性，支持LiveData数据返回等优势。
+我们选择room，更多的时完美的支持LiveData，可以动态的将数据变化自动更新到LiveData上，在通过LiveData自动刷新到UI上。
+
+这里引用网络上的一张Room与其他同类性能对比图片：
+
+[性能对比](arch3.png)
+
+*用法：*
+
+1. 继承RoomDatabase的抽象类, 暴露抽象方法getxxxDao()。
+
+```
+@Database(entities = {EssayDayEntity.class, ZhihuItemEntity.class}, version = 1)
+@TypeConverters(DateConverter.class)
+public abstract class AppDB extends RoomDatabase {
+    private static AppDB sInstance;
+
+    @VisibleForTesting
+    public static final String DATABASE_NAME = "canking.db";
+    public abstract EssayDao essayDao();
+ }
+```
+
+2. 获取db实例
+
+```
+ppDatabase db = Room.databaseBuilder(getApplicationContext(),
+        AppDatabase.class, "database-name").build();
+```
+
+3. 实现Dao层逻辑
+
+```
+@Dao
+public interface ZhuhuDao {
+    @Query("SELECT * FROM zhuhulist  order by id desc, id limit 0,1")
+    LiveData<ZhihuItemEntity> loadZhuhu();
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertItem(ZhihuItemEntity products);
+}
+```
+
+4. 添加一张表结构
+
+```
+@Entity
+public class User {
+    @PrimaryKey
+    private int uid;
+
+    @ColumnInfo(name = "first_name")
+    private String firstName;
+
+    public String date;//默认columnInfo 为 date
+
+}
+```
+
+就这么简单，就可以实现数据库的操作，完全隔离的底层复杂的数据库操作，大大节省项目研发重复劳动力。
+
+从使用说明分析，UserDao和Db继承要不是接口，要不是抽象，那么这些逻辑的实现完全是由annotationProcessor依赖注入，帮我们实现的。
+那么编译项目后，可以在build目录下看到生成相应的类xxx_impl.class。
+[impl](arch4.png)
+
+既然Room支持LiveData数据，那么有可以分析下源码,了解下具体原理，方便以后填坑。
+
+先选Demo中Dao层的query方法，看看数据如何加载到内存的。我们的query方法如下：
+
+```
+    @Query("SELECT * FROM zhuhulist  order by id desc, id limit 0,1")
+    LiveData<ZhihuItemEntity> loadZhuhu();
+```
+
+annotationProcessor帮我吗生成后的实现为：
+
+```
+ public LiveData<ZhihuItemEntity> loadZhuhu() {
+        String _sql = "SELECT * FROM zhuhulist  order by id desc, id limit 0,1";
+        final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire("SELECT * FROM zhuhulist  order by id desc, id limit 0,1", 0);
+        return (new ComputableLiveData<ZhihuItemEntity>() {
+            private Observer _observer;
+
+            protected ZhihuItemEntity compute() {
+                if(this._observer == null) {
+                    this._observer = new Observer("zhuhulist", new String[0]) {
+                        public void onInvalidated(@NonNull Set<String> tables) {
+                            invalidate();
+                        }
+                    };
+                    ZhuhuDao_Impl.this.__db.getInvalidationTracker().addWeakObserver(this._observer);
+                }
+
+                Cursor _cursor = ZhuhuDao_Impl.this.__db.query(_statement);
+
+                ZhihuItemEntity var13;
+                try {
+                    int _cursorIndexOfId = _cursor.getColumnIndexOrThrow("id");
+                    int _cursorIndexOfDate = _cursor.getColumnIndexOrThrow("date");
+                    int _cursorIndexOfStories = _cursor.getColumnIndexOrThrow("stories");
+                    int _cursorIndexOfTopStories = _cursor.getColumnIndexOrThrow("top_stories");
+                    ZhihuItemEntity _result;
+                    if(_cursor.moveToFirst()) {
+                        _result = new ZhihuItemEntity();
+                        int _tmpId = _cursor.getInt(_cursorIndexOfId);
+                        _result.setId(_tmpId);
+                        _result.date = _cursor.getString(_cursorIndexOfDate);
+                        String _tmp = _cursor.getString(_cursorIndexOfStories);
+                        _result.stories = DateConverter.toString(_tmp);
+                        String _tmp_1 = _cursor.getString(_cursorIndexOfTopStories);
+                        _result.top_stories = DateConverter.toString(_tmp_1);
+                    } else {
+                        _result = null;
+                    }
+
+                    var13 = _result;
+                } finally {
+                    _cursor.close();
+                }
+
+                return var13;
+            }
+
+            protected void finalize() {
+                _statement.release();
+            }
+        }).getLiveData();
+    }
+```
+
+实现类中通过
+
+
+
 
 
 
