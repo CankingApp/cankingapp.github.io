@@ -2,16 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://www.canking.win/2017/11/19/gradle-android-res/</loc>
+    <loc>http://www.canking.win/2017/09/21/minipay/</loc>
     
-    <lastmod>2017-12-11T09:11:48.176Z</lastmod>
+    <lastmod>2017-12-13T05:55:28.480Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://www.canking.win/2017/12/09/mvvm/</loc>
     
-    <lastmod>2017-12-11T08:24:25.637Z</lastmod>
+    <lastmod>2017-12-13T05:55:23.934Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.canking.win/2017/11/19/gradle-android-res/</loc>
+    
+    <lastmod>2017-12-11T09:11:48.176Z</lastmod>
     
   </url>
   
@@ -26,13 +33,6 @@
     <loc>http://www.canking.win/2015/06/18/2016-03-18-01/</loc>
     
     <lastmod>2017-11-24T02:01:15.689Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.canking.win/2017/09/21/minipay/</loc>
-    
-    <lastmod>2017-09-22T08:55:26.000Z</lastmod>
     
   </url>
   
@@ -121,7 +121,56 @@
   </url>
   
   <url>
+    <loc>http://www.canking.win/2016/03/22/apk-backup/</loc>
+    
+    <lastmod>2017-04-28T06:11:02.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.canking.win/2016/03/17/hello-world/</loc>
+    
+    <lastmod>2017-04-28T06:11:02.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.canking.win/2016/04/08/npm-update-errer/</loc>
+    
+    <lastmod>2017-04-28T06:11:02.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.canking.win/2016/03/18/Hexo-blog/</loc>
+    
+    <lastmod>2017-04-28T06:11:02.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.canking.win/2016/03/30/ffmpeg/</loc>
+    
+    <lastmod>2017-04-28T06:11:02.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.canking.win/2016/03/18/notification-mgr/</loc>
+    
+    <lastmod>2017-04-28T06:11:02.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.canking.win/2016/03/18/android-permission/</loc>
+    
+    <lastmod>2017-04-28T06:11:02.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.canking.win/2016/03/18/python/</loc>
     
     <lastmod>2017-04-28T06:11:02.000Z</lastmod>
     
@@ -136,55 +185,6 @@
   
   <url>
     <loc>http://www.canking.win/2016/06/02/access-float/</loc>
-    
-    <lastmod>2017-04-28T06:11:02.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.canking.win/2016/04/08/npm-update-errer/</loc>
-    
-    <lastmod>2017-04-28T06:11:02.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.canking.win/2016/03/30/ffmpeg/</loc>
-    
-    <lastmod>2017-04-28T06:11:02.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.canking.win/2016/03/22/apk-backup/</loc>
-    
-    <lastmod>2017-04-28T06:11:02.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.canking.win/2016/03/18/Hexo-blog/</loc>
-    
-    <lastmod>2017-04-28T06:11:02.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.canking.win/2016/03/18/python/</loc>
-    
-    <lastmod>2017-04-28T06:11:02.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.canking.win/2016/03/18/android-permission/</loc>
-    
-    <lastmod>2017-04-28T06:11:02.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.canking.win/2016/03/18/notification-mgr/</loc>
     
     <lastmod>2017-04-28T06:11:02.000Z</lastmod>
     
