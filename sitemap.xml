@@ -4,7 +4,7 @@
   <url>
     <loc>http://www.canking.win/about/ABOUTME.html</loc>
     
-    <lastmod>2018-01-14T03:04:33.665Z</lastmod>
+    <lastmod>2018-03-11T05:05:53.568Z</lastmod>
     
   </url>
   
@@ -135,14 +135,21 @@
   </url>
   
   <url>
-    <loc>http://www.canking.win/2016/04/08/npm-update-errer/</loc>
+    <loc>http://www.canking.win/2016/11/08/git-log/</loc>
     
     <lastmod>2017-04-28T06:11:02.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.canking.win/2016/03/22/apk-backup/</loc>
+    <loc>http://www.canking.win/2016/03/18/notification-mgr/</loc>
+    
+    <lastmod>2017-04-28T06:11:02.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.canking.win/2016/04/08/npm-update-errer/</loc>
     
     <lastmod>2017-04-28T06:11:02.000Z</lastmod>
     
@@ -156,14 +163,14 @@
   </url>
   
   <url>
-    <loc>http://www.canking.win/2016/03/18/Hexo-blog/</loc>
+    <loc>http://www.canking.win/2016/06/02/access-float/</loc>
     
     <lastmod>2017-04-28T06:11:02.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.canking.win/2016/11/08/git-log/</loc>
+    <loc>http://www.canking.win/2016/03/22/apk-backup/</loc>
     
     <lastmod>2017-04-28T06:11:02.000Z</lastmod>
     
@@ -177,20 +184,6 @@
   </url>
   
   <url>
-    <loc>http://www.canking.win/2016/03/18/android-permission/</loc>
-    
-    <lastmod>2017-04-28T06:11:02.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.canking.win/2016/06/02/access-float/</loc>
-    
-    <lastmod>2017-04-28T06:11:02.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.canking.win/2016/03/30/android-theme/</loc>
     
     <lastmod>2017-04-28T06:11:02.000Z</lastmod>
@@ -198,7 +191,14 @@
   </url>
   
   <url>
-    <loc>http://www.canking.win/2016/03/18/notification-mgr/</loc>
+    <loc>http://www.canking.win/2016/03/18/android-permission/</loc>
+    
+    <lastmod>2017-04-28T06:11:02.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.canking.win/2016/03/18/Hexo-blog/</loc>
     
     <lastmod>2017-04-28T06:11:02.000Z</lastmod>
     
