@@ -2,23 +2,58 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://www.canking.win/2017/12/09/mvvm/</loc>
+    <loc>http://www.canking.win/2018/04/01/sharedpref/</loc>
     
-    <lastmod>2017-12-10T06:03:23.870Z</lastmod>
+    <lastmod>2018-04-02T02:10:53.114Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.canking.win/2017/11/19/gradle-android-res/</loc>
+    <loc>http://www.canking.win/2018/03/20/mem-oom/</loc>
     
-    <lastmod>2017-12-07T11:18:35.213Z</lastmod>
+    <lastmod>2018-04-01T10:14:14.884Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://www.canking.win/about/index.html</loc>
     
-    <lastmod>2017-12-01T02:48:35.553Z</lastmod>
+    <lastmod>2018-03-26T02:37:26.910Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.canking.win/about/ABOUTME.html</loc>
+    
+    <lastmod>2018-03-11T05:05:53.568Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.canking.win/2018/01/07/dy-load/</loc>
+    
+    <lastmod>2018-01-08T09:59:50.763Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.canking.win/2017/09/21/minipay/</loc>
+    
+    <lastmod>2017-12-13T05:55:28.480Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.canking.win/2017/12/09/mvvm/</loc>
+    
+    <lastmod>2017-12-13T05:55:23.934Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.canking.win/2017/11/19/gradle-android-res/</loc>
+    
+    <lastmod>2017-12-11T09:11:48.176Z</lastmod>
     
   </url>
   
@@ -26,13 +61,6 @@
     <loc>http://www.canking.win/2015/06/18/2016-03-18-01/</loc>
     
     <lastmod>2017-11-24T02:01:15.689Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.canking.win/2017/09/21/minipay/</loc>
-    
-    <lastmod>2017-09-22T08:55:26.000Z</lastmod>
     
   </url>
   
@@ -121,6 +149,13 @@
   </url>
   
   <url>
+    <loc>http://www.canking.win/2016/11/08/git-log/</loc>
+    
+    <lastmod>2017-04-28T06:11:02.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.canking.win/2016/04/08/npm-update-errer/</loc>
     
     <lastmod>2017-04-28T06:11:02.000Z</lastmod>
@@ -128,21 +163,21 @@
   </url>
   
   <url>
+    <loc>http://www.canking.win/2016/03/17/hello-world/</loc>
+    
+    <lastmod>2017-04-28T06:11:02.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.canking.win/2016/03/30/android-theme/</loc>
+    
+    <lastmod>2017-04-28T06:11:02.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.canking.win/2016/03/22/apk-backup/</loc>
-    
-    <lastmod>2017-04-28T06:11:02.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.canking.win/2016/03/18/notification-mgr/</loc>
-    
-    <lastmod>2017-04-28T06:11:02.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.canking.win/2016/03/18/android-permission/</loc>
     
     <lastmod>2017-04-28T06:11:02.000Z</lastmod>
     
@@ -163,14 +198,7 @@
   </url>
   
   <url>
-    <loc>http://www.canking.win/2016/03/17/hello-world/</loc>
-    
-    <lastmod>2017-04-28T06:11:02.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.canking.win/2016/03/18/Hexo-blog/</loc>
+    <loc>http://www.canking.win/2016/03/18/android-permission/</loc>
     
     <lastmod>2017-04-28T06:11:02.000Z</lastmod>
     
@@ -184,14 +212,14 @@
   </url>
   
   <url>
-    <loc>http://www.canking.win/2016/03/30/android-theme/</loc>
+    <loc>http://www.canking.win/2016/03/18/Hexo-blog/</loc>
     
     <lastmod>2017-04-28T06:11:02.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.canking.win/2016/11/08/git-log/</loc>
+    <loc>http://www.canking.win/2016/03/18/notification-mgr/</loc>
     
     <lastmod>2017-04-28T06:11:02.000Z</lastmod>
     

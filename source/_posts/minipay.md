@@ -202,7 +202,7 @@ tags: source code
 
 
 [![Get it on Google Play](https://play.google.com/intl/en_us/badges/images/badge_new.png)](https://play.google.com/store/apps/details?id=com.canking.paydemo)
--------——————
+-------
 欢迎转载，请标明出处：常兴E站 [www.canking.win](http://www.canking.win)
 
 
